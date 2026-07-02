@@ -216,7 +216,80 @@ process2() {  // 计算进程
     }
 }</code></pre>
 
-  <h3>2.6 课后习题（Ch2 全部在考试范围内 ✅）</h3>
+  <h3>2.6 概念题详解</h3>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">1</span> 进程与程序的区别</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>简述进程与程序的区别和联系。</p>
+      <div class="answer">
+        <div class="answer-label">答案</div>
+        <p><strong>区别</strong>：</p>
+        <ul>
+          <li>程序是指令的集合，<strong>静态概念</strong>；进程是程序在处理机上的一次执行过程，<strong>动态概念</strong></li>
+          <li>程序是长期存在的；进程有生命周期（创建、活动、消亡）</li>
+          <li>程序仅是指令的有序集合；进程由<strong>程序、数据和PCB</strong>组成</li>
+          <li>进程与程序<strong>不是一一对应</strong>的：同一程序可对应多个进程，一个进程可执行多个程序</li>
+        </ul>
+        <p><strong>联系</strong>：进程是程序的动态执行过程，程序是进程的静态基础。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">2</span> 进程的基本状态</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>画出进程的三种基本状态及其转换图，并说明每种状态的含义。</p>
+      <div class="answer">
+        <div class="answer-label">答案</div>
+        <pre><code>        就绪 ──────→ 执行
+         ↑            │
+         │     时间片完│
+         │            ↓
+        I/O完成 ←─── 阻塞
+                    I/O请求</code></pre>
+        <ul>
+          <li><strong>就绪</strong>：已分配到除CPU以外的所有必要资源，只要获得CPU就可以执行</li>
+          <li><strong>执行</strong>：已获得CPU，正在执行</li>
+          <li><strong>阻塞</strong>：正在执行的进程由于发生某事件而暂时无法继续执行时放弃CPU</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">3</span> PCB的作用</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>为什么说PCB是进程存在的唯一标志？PCB中包含哪些信息？</p>
+      <div class="answer">
+        <div class="answer-label">答案</div>
+        <p>PCB是进程存在的<strong>唯一标志</strong>，因为系统通过PCB来感知进程的存在、控制进程的活动。</p>
+        <p>PCB包含：进程标识符（pid）、进程状态、现场信息（寄存器等）、优先级、阻塞原因、程序地址、同步机制、资源清单、链接指针。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">4</span> 线程与进程的区别</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>简述线程与进程的区别。</p>
+      <div class="answer">
+        <div class="answer-label">答案</div>
+        <ul>
+          <li>线程是<strong>调度和分派的基本单位</strong></li>
+          <li>进程是<strong>拥有资源的基本单位</strong></li>
+          <li>一个进程可以有多个线程，它们共享进程的资源</li>
+          <li>线程切换开销小，进程切换开销大</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h3>2.7 课后习题（Ch2 全部在考试范围内 ✅）</h3>
   <table>
     <tr><th>题号</th><th>题目内容</th><th>类型</th></tr>
     <tr><td>2-1</td><td>进程与程序的区别和联系</td><td>概念</td></tr>
@@ -293,7 +366,73 @@ process2() {  // 计算进程
   <p>用有向图描述进程和资源之间的分配和请求关系。圆圈表示进程，方框表示资源，方框中的圆点表示资源实例。</p>
   <div class="tip"><div class="tip-title">💡 关键结论</div>如果图中存在环路，且环路中的每类资源只有一个实例，则发生死锁。</div>
 
-  <h3>3.3 课后习题（范围内的 ✅ / 范围外的 ❌）</h3>
+  <h3>3.3 概念题详解</h3>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">1</span> 死锁的四个必要条件</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>什么是死锁？产生死锁的四个必要条件是什么？哪些条件可以破坏？如何破坏？</p>
+      <div class="answer">
+        <div class="answer-label">答案</div>
+        <p><strong>死锁</strong>：多个进程因竞争资源而无限期等待，无法继续执行的状态。</p>
+        <p><strong>四个必要条件</strong>：</p>
+        <ol>
+          <li><strong>互斥条件</strong>：资源的临界性（固有属性，不能破坏）</li>
+          <li><strong>请求和保持条件</strong>：进程已占有资源，又申请新资源 → 破坏：资源一次性分配（全分配，全释放）</li>
+          <li><strong>不剥夺条件</strong>：进程已获得的资源不能被剥夺 → 破坏：新申请不能满足则释放已获得资源</li>
+          <li><strong>环路等待条件</strong>：存在进程-资源的循环等待链 → 破坏：资源的有序分配法（为资源编号）</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">2</span> 银行家算法</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>什么是安全状态？什么是不安全状态？银行家算法的基本思想是什么？</p>
+      <div class="answer">
+        <div class="answer-label">答案</div>
+        <p><strong>安全状态</strong>：能找到安全序列的状态，即按某种顺序并发进程都能达到获得最大资源而顺序完成。</p>
+        <p><strong>不安全状态</strong>：找不到安全序列的状态。</p>
+        <p><strong>银行家算法</strong>：一种能够避免死锁的调度算法。当进程申请资源时，先假设分配，然后检查系统是否仍处于安全状态。如果是，则真正分配；否则，拒绝分配，让进程等待。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">3</span> 资源分配图</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>资源分配图中，有环路是否一定发生死锁？为什么？</p>
+      <div class="answer">
+        <div class="answer-label">答案</div>
+        <p><strong>不一定</strong>。资源分配图中存在环路是死锁的<strong>必要条件</strong>，但不是<strong>充分条件</strong>。</p>
+        <p>只有当环路中的<strong>每类资源只有一个实例</strong>时，才一定发生死锁。如果环路中的资源有多个实例，则可能通过分配其他实例来打破死锁。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">4</span> 死锁处理方法对比</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>死锁的预防、避免、检测与解除有什么区别？</p>
+      <div class="answer">
+        <div class="answer-label">答案</div>
+        <table>
+          <tr><th>方法</th><th>策略</th><th>特点</th></tr>
+          <tr><td><strong>预防</strong></td><td>破坏四个必要条件之一</td><td>有效，但资源利用率低</td></tr>
+          <tr><td><strong>避免</strong></td><td>防止进入不安全状态（银行家算法）</td><td>允许动态申请资源，但需要预知最大需求</td></tr>
+          <tr><td><strong>检测</strong><td><td>检测到死锁再处理</td><td>不限制资源分配，但处理延迟</td></tr>
+          <tr><td><strong>解除</strong></td><td>剥夺资源、进程回退、撤销进程</td><td>与检测配套使用</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <h3>3.4 课后习题（范围内的 ✅ / 范围外的 ❌）</h3>
   <table>
     <tr><th>题号</th><th>题目内容</th><th>范围</th></tr>
     <tr><td>3-1</td><td>FCFS调度算法：计算完成时间、周转时间、带权周转时间</td><td><span class="tag tag-ok">✅</span></td></tr>
@@ -370,7 +509,79 @@ process2() {  // 计算进程
   <p>段表：段号 | 段长 | 基址 | 存取控制</p>
   <p>地址变换：段号查段表 → 段内地址与段长比较（越界检查）→ 物理地址 = 基址 + 段内地址</p>
 
-  <h3>4.5 课后习题（Ch4 全部在考试范围内 ✅）</h3>
+  <h3>4.5 概念题详解</h3>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">1</span> 动态重定位 vs 静态重定位</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>什么是动态重定位？与静态重定位有什么区别？为什么紧凑必须配合动态重定位？</p>
+      <div class="answer">
+        <div class="answer-label">答案</div>
+        <table>
+          <tr><th>对比项</th><th>静态重定位</th><th>动态重定位</th></tr>
+          <tr><td>转换时机</td><td>装入时一次完成</td><td>运行时持续进行</td></tr>
+          <tr><td>硬件支持</td><td>不需要</td><td><strong>需要重定位寄存器</strong></td></tr>
+          <tr><td>能否移动</td><td>❌ 不能</td><td>✅ 能</td></tr>
+          <tr><td>能否紧凑</td><td>❌ 不能</td><td>✅ 能</td></tr>
+        </table>
+        <p><strong>紧凑必须配合动态重定位</strong>：紧凑把进程在内存中搬来搬去，物理地址变了。但进程代码里的逻辑地址没变，只有靠动态重定位在运行时实时转换，程序才能在新位置正确执行。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">2</span> 紧凑（Compaction）</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>什么是紧凑？为什么要紧凑？紧凑需要什么条件？</p>
+      <div class="answer">
+        <div class="answer-label">答案</div>
+        <p><strong>紧凑</strong>：将内存中的进程移动，使它们相邻，空出大块连续空间。</p>
+        <p><strong>为什么要紧凑</strong>：连续分配产生大量<strong>外部碎片</strong>（分散的小空闲区），虽然空闲总量够，但没有足够大的连续空间分配给新进程。</p>
+        <p><strong>条件</strong>：必须采用<strong>动态重定位</strong>，因为进程搬家后物理地址变了，需要重定位寄存器实时转换地址。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">3</span> 分页 vs 分段</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>分页和分段的主要区别是什么？</p>
+      <div class="answer">
+        <div class="answer-label">答案</div>
+        <table>
+          <tr><th>对比项</th><th>分页</th><th>分段</th></tr>
+          <tr><td>单位性质</td><td><strong>物理单位</strong></td><td><strong>逻辑单位</strong></td></tr>
+          <tr><td>页/段大小</td><td>固定（由系统决定）</td><td>不固定（由用户决定）</td></tr>
+          <tr><td>地址空间</td><td>一维</td><td>二维（段号+段内地址）</td></tr>
+          <tr><td>目的</td><td>提高内存利用率</td><td>方便用户编程、共享、保护</td></tr>
+          <tr><td>碎片</td><td>内碎片</td><td>外碎片</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">4</span> 内存分配算法对比</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>首次适应、循环首次适应、最佳适应、最坏适应算法各有什么特点？</p>
+      <div class="answer">
+        <div class="answer-label">答案</div>
+        <table>
+          <tr><th>算法</th><th>策略</th><th>优点</th><th>缺点</th></tr>
+          <tr><td><strong>首次适应</strong></td><td>从低地址开始，找第一个够大的</td><td>简单，低地址充分利用</td><td>低地址碎片多</td></tr>
+          <tr><td><strong>循环首次适应</strong></td><td>从上次位置继续找</td><td>分配均匀，查找速度快</td><td>缺乏大空闲分区</td></tr>
+          <tr><td><strong>最佳适应</strong></td><td>找最小的满足需求的分区</td><td>减少浪费，碎片小</td><td>产生很多小碎片</td></tr>
+          <tr><td><strong>最坏适应</strong></td><td>找最大的分区</td><td>减少小碎片</td><td>大作业难满足</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <h3>4.6 课后习题（Ch4 全部在考试范围内 ✅）</h3>
   <table>
     <tr><th>题号</th><th>题目内容</th><th>类型</th></tr>
     <tr><td>4-1</td><td><strong>逻辑地址格式</strong>：已知逻辑空间32页，每页2K，物理空间1M，写地址格式</td><td>计算</td></tr>
@@ -476,7 +687,66 @@ process2() {  // 计算进程
   <h3>6.4 设备独立性</h3>
   <p>用户程序使用<strong>逻辑设备名</strong>，与物理设备无关。操作系统负责逻辑设备到物理设备的映射。</p>
 
-  <h3>6.5 课后习题（范围内的 ✅ / 范围外的 ❌）</h3>
+<h3>6.2 概念题详解</h3>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">1</span> 四种I/O控制方式对比</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>简述程序I/O、中断驱动、DMA、I/O通道四种方式的特点，并比较它们的CPU干预程度、传输单位和适用场景。</p>
+      <div class="answer">
+        <div class="answer-label">答案</div>
+        <table>
+          <tr><th>方式</th><th>CPU干预程度</th><th>传输单位</th><th>适用场景</th></tr>
+          <tr><td><strong>程序I/O</strong></td><td>完全干预</td><td>字/字节</td><td>简单低速</td></tr>
+          <tr><td><strong>中断驱动</strong></td><td>每字中断</td><td>字/字节</td><td>中低速</td></tr>
+          <tr><td><strong>DMA</strong></td><td>开始/结束</td><td>数据块</td><td>高速</td></tr>
+          <tr><td><strong>I/O通道</strong></td><td>发命令即可</td><td>一组块</td><td>大量数据</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">2</span> DMA方式的特点</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>DMA方式为什么比中断方式快？DMA以什么为单位传输？</p>
+      <div class="answer">
+        <div class="answer-label">答案</div>
+        <p><strong>为什么快</strong>：DMA方式在DMA控制器的控制下，数据直接在设备和内存之间传输，<strong>无需CPU干预</strong>，只在开始和结束时需要CPU。而中断方式每传一个数据就要中断一次CPU。</p>
+        <p><strong>传输单位</strong>：以<strong>数据块</strong>为单位传输。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">3</span> SPOOLing技术</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>什么是SPOOLing技术？它是如何将独占设备变成共享设备的？</p>
+      <div class="answer">
+        <div class="answer-label">答案</div>
+        <p><strong>SPOOLing（假脱机技术）</strong>：利用磁盘作为缓冲，将独占设备改造成共享设备的技术。</p>
+        <p><strong>原理</strong>：多个用户可以同时请求使用打印机，但实际上操作系统将这些请求排队，依次从磁盘缓冲区输出到打印机。用户感觉自己在独占使用打印机，实际上是共享的。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">4</span> 设备独立性</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>什么是设备独立性？使用逻辑设备名有什么好处？</p>
+      <div class="answer">
+        <div class="answer-label">答案</div>
+        <p><strong>设备独立性</strong>：用户程序使用<strong>逻辑设备名</strong>，与物理设备无关。操作系统负责逻辑设备到物理设备的映射。</p>
+        <p><strong>好处</strong>：程序与具体物理设备无关，设备更换时程序无需修改；便于系统分配设备。</p>
+      </div>
+    </div>
+  </div>
+
+    <h3>6.5 课后习题（范围内的 ✅ / 范围外的 ❌）</h3>
   <p><strong>Ch6考试以概念分析为主</strong>，范围内的内容主要是四种I/O控制方式的对比、SPOOLing、设备独立性等概念题，没有典型计算题。下面列出重点概念题：</p>
   <table>
     <tr><th>题号</th><th>题目内容</th><th>范围</th></tr>
@@ -534,7 +804,81 @@ process2() {  // 计算进程
     <li>文件保护：口令保护、加密保护、访问控制</li>
   </ul>
 
-  <h3>7.5 课后习题（Ch7 全部在考试范围内 ✅）</h3>
+<h3>7.2 概念题详解</h3>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">1</span> 文件目录结构对比</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>比较单级目录、两级目录、树形目录的特点，各有什么优缺点？</p>
+      <div class="answer">
+        <div class="answer-label">答案</div>
+        <table>
+          <tr><th>目录结构</th><th>特点</th><th>优点</th><th>缺点</th></tr>
+          <tr><td><strong>单级目录</strong></td><td>所有文件放在同一目录</td><td>简单</td><td>文件名不能重复</td></tr>
+          <tr><td><strong>两级目录</strong></td><td>主文件目录+用户文件目录</td><td>不同用户可重名</td><td>用户间不能共享</td></tr>
+          <tr><td><strong>树形目录</strong></td><td>多级层次结构</td><td>便于管理、共享</td><td>查找路径长</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">2</span> 索引节点 inode</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>在UNIX中，为什么要引入inode？目录项和inode分别存放什么？</p>
+      <div class="answer">
+        <div class="answer-label">答案</div>
+        <p><strong>引入inode的原因</strong>：将文件名与文件属性信息分离，便于文件共享和快速查找。</p>
+        <p><strong>目录项</strong>：只包含<strong>文件名</strong>和指向inode的<strong>指针</strong>。</p>
+        <p><strong>inode</strong>：存放文件的元数据，包括文件类型、大小、权限、时间戳、盘块地址等。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">3</span> 硬链接 vs 软链接</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>比较硬链接和软链接（符号链接）的区别。</p>
+      <div class="answer">
+        <div class="answer-label">答案</div>
+        <table>
+          <tr><th>对比项</th><th>硬链接</th><th>软链接（符号链接）</th></tr>
+          <tr><td>实现方式</td><td>共享inode（count计数）</td><td>新建文件，存放目标路径</td></tr>
+          <tr><td>删除原文件</td><td>不影响硬链接</td><td>软链接失效（悬空）</td></tr>
+          <tr><td>跨文件系统</td><td>❌ 不能</td><td>✅ 能</td></tr>
+          <tr><td>链接目录</td><td>❌ 不能</td><td>✅ 能</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">4</span> 顺序文件 vs 索引文件</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>比较顺序文件和索引文件的优缺点，各适合什么场景？</p>
+      <div class="answer">
+        <div class="answer-label">答案</div>
+        <p><strong>顺序文件</strong>：</p>
+        <ul>
+          <li>优点：批量存取效率高，只有顺序文件能存储在磁带上</li>
+          <li>缺点：插入删除困难，交互应用性能差</li>
+          <li>适合：批量处理、磁带存储</li>
+        </ul>
+        <p><strong>索引文件</strong>：</p>
+        <ul>
+          <li>优点：查找速度快，插入删除方便</li>
+          <li>缺点：增加存储开销（索引表）</li>
+          <li>适合：变长记录、随机访问频繁的场景</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+    <h3>7.5 课后习题（Ch7 全部在考试范围内 ✅）</h3>
   <p><strong>Ch7考试以概念分析为主</strong>，文件管理的内容主要是文件目录结构、文件逻辑结构、索引节点、文件共享与保护等概念题，没有典型计算题。下面列出重点概念题：</p>
   <table>
     <tr><th>题号</th><th>题目内容</th><th>类型</th></tr>
@@ -608,7 +952,45 @@ process2() {  // 计算进程
     <tr><td>索引分配</td><td>支持随机访问，无碎片</td><td>索引块开销，访问需读索引</td></tr>
   </table>
 
-  <h3>8.4 课后习题（范围内的 ✅ / 范围外的 ❌）</h3>
+<h3>8.4 概念题详解</h3>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">1</span> FAT12/16/32 对比</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>比较FAT12、FAT16、FAT32的特点，分析各自的优缺点。</p>
+      <div class="answer">
+        <div class="answer-label">答案</div>
+        <table>
+          <tr><th>类型</th><th>表项位数</th><th>最大容量</th><th>优缺点</th></tr>
+          <tr><td><strong>FAT12</strong></td><td>12位</td><td>2MB（分区）/ 8MB（磁盘）</td><td>简单，但容量太小</td></tr>
+          <tr><td><strong>FAT16</strong></td><td>16位</td><td>2GB</td><td>容量增大，但簇内碎片大（浪费10%~20%）</td></tr>
+          <tr><td><strong>FAT32</strong></td><td>28位（实际）</td><td>1TB</td><td>容量大，可用小簇减少碎片，但FAT表开销大</td></tr>
+        </table>
+        <p><strong>趋势</strong>：FAT12 → FAT16 → FAT32，表项位数增大，可管理磁盘容量增大，但FAT表存储开销也随之增大。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">2</span> 文件物理结构对比</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>比较连续分配、链接分配、索引分配三种文件物理结构的优缺点。</p>
+      <div class="answer">
+        <div class="answer-label">答案</div>
+        <table>
+          <tr><th>分配方式</th><th>优点</th><th>缺点</th></tr>
+          <tr><td><strong>连续分配</strong></td><td>速度快，支持随机访问</td><td>产生碎片，不利于增长</td></tr>
+          <tr><td><strong>链接分配</strong></td><td>无碎片，利于增长</td><td>随机访问慢，指针占用空间</td></tr>
+          <tr><td><strong>索引分配</strong></td><td>支持随机访问，无碎片</td><td>索引块开销，访问需读索引</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <h3>8.5 课后习题（范围内的 ✅ / 范围外的 ❌）</h3>
+    <h3>8.4 课后习题（范围内的 ✅ / 范围外的 ❌）</h3>
   <p><strong>Ch8有计算题</strong>：FAT12/16/32的容量计算、混合索引最大文件大小计算。下面列出具体习题：</p>
   <table>
     <tr><th>题号</th><th>题目内容</th><th>类型</th><th>范围</th></tr>
