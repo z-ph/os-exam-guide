@@ -1,385 +1,173 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>操作系统 · 全章节复习汇总</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #f8f9fb;
-      --bg-card: #ffffff;
-      --bg-code: #f1f3f6;
-      --bg-table-head: #f0f2f7;
-      --bg-table-alt: #fafbfd;
-      --text: #1a1d2e;
-      --text-secondary: #5a6078;
-      --text-muted: #8a90a8;
-      --border: #e2e5ee;
-      --accent: #2d5af5;
-      --accent-light: #e8eeff;
-      --accent2: #0ea5e9;
-      --accent3: #10b981;
-      --danger: #ef4444;
-      --warning: #f59e0b;
-      --success: #10b981;
-      --exclude: #f87171;
-      --exclude-bg: #fef2f2;
-      --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
-      --shadow-hover: 0 4px 6px rgba(0,0,0,0.05), 0 10px 24px rgba(0,0,0,0.06);
-      --radius: 12px;
-      --radius-sm: 8px;
-      --font-body: 'Inter', 'Noto Serif SC', -apple-system, sans-serif;
-      --font-serif: 'Noto Serif SC', serif;
-      --font-mono: 'JetBrains Mono', monospace;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0f111a;
-        --bg-card: #181b2a;
-        --bg-code: #1e2235;
-        --bg-table-head: #1e2235;
-        --bg-table-alt: #141724;
-        --text: #e4e6f0;
-        --text-secondary: #9ca3b8;
-        --text-muted: #6b728e;
-        --border: #2a2f45;
-        --accent: #4d7bff;
-        --accent-light: #1a2244;
-        --accent2: #38bdf8;
-        --accent3: #34d399;
-        --danger: #f87171;
-        --warning: #fbbf24;
-        --success: #34d399;
-        --exclude: #f87171;
-        --exclude-bg: #2a1a1a;
-        --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.2);
-        --shadow-hover: 0 4px 6px rgba(0,0,0,0.25), 0 10px 24px rgba(0,0,0,0.3);
-      }
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; font-size: 16px; }
-    body {
-      font-family: var(--font-body);
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.75;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    /* HERO */
-    .hero {
-      position: relative;
-      overflow: hidden;
-      background: var(--bg-card);
-      border-bottom: 1px solid var(--border);
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 80% 50% at 20% 50%, rgba(45,90,245,0.08) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 40% at 80% 30%, rgba(14,165,233,0.06) 0%, transparent 50%);
-      pointer-events: none;
-    }
-    .hero-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 56px 24px 40px;
-      position: relative;
-    }
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--accent);
-      background: var(--accent-light);
-      padding: 6px 14px;
-      border-radius: 100px;
-      margin-bottom: 20px;
-      letter-spacing: 0.02em;
-    }
-    .hero h1 {
-      font-family: var(--font-serif);
-      font-size: clamp(1.8rem, 5vw, 2.6rem);
-      font-weight: 700;
-      line-height: 1.25;
-      margin-bottom: 12px;
-      letter-spacing: -0.02em;
-    }
-    .hero-desc {
-      color: var(--text-secondary);
-      font-size: 1.05rem;
-      max-width: 600px;
-    }
-    .hero-exam-range {
-      margin-top: 20px;
-      padding: 16px 20px;
-      background: var(--accent-light);
-      border-radius: var(--radius-sm);
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-    }
-    .hero-exam-range strong {
-      color: var(--accent);
-    }
-
-    /* NAV */
-    .nav-bar {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: color-mix(in srgb, var(--bg-card) 90%, transparent);
-      backdrop-filter: blur(16px) saturate(1.4);
-      -webkit-backdrop-filter: blur(16px) saturate(1.4);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 24px;
-      display: flex;
-      gap: 4px;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-    .nav-inner::-webkit-scrollbar { display: none; }
-    .nav-item {
-      flex-shrink: 0;
-      padding: 14px 16px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--text-muted);
-      text-decoration: none;
-      border-bottom: 2px solid transparent;
-      transition: all 0.2s ease;
-      white-space: nowrap;
-    }
-    .nav-item:hover { color: var(--accent); }
-    .nav-item.active { color: var(--accent); border-bottom-color: var(--accent); }
-    .nav-item.exclude { color: var(--exclude); }
-
-    /* MAIN */
-    .main { max-width: 900px; margin: 0 auto; padding: 40px 24px 80px; }
-
-    /* SECTION */
-    .section {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 32px;
-      margin-bottom: 24px;
-      box-shadow: var(--shadow);
-      transition: box-shadow 0.3s ease;
-    }
-    .section:hover { box-shadow: var(--shadow-hover); }
-    .section-title {
-      font-family: var(--font-serif);
-      font-size: 1.45rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-      padding-bottom: 12px;
-      border-bottom: 2px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .section-title .icon {
-      width: 28px; height: 28px;
-      display: flex; align-items: center; justify-content: center;
-      border-radius: 8px; font-size: 0.9rem;
-    }
-    .ch2 .icon { background: var(--accent-light); color: var(--accent); }
-    .ch3 .icon { background: rgba(14,165,233,0.12); color: var(--accent2); }
-    .ch4 .icon { background: rgba(16,185,129,0.12); color: var(--accent3); }
-    .ch5 .icon { background: var(--accent-light); color: var(--accent); }
-    .ch6 .icon { background: rgba(245,158,11,0.12); color: var(--warning); }
-    .ch7 .icon { background: rgba(239,68,68,0.12); color: var(--danger); }
-    .ch8 .icon { background: rgba(139,92,246,0.12); color: #8b5cf6; }
-    .exclude-section .icon { background: var(--exclude-bg); color: var(--exclude); }
-
-    h3 { font-size: 1.15rem; font-weight: 600; margin: 24px 0 12px; color: var(--text); }
-    h4 { font-size: 0.98rem; font-weight: 600; margin: 18px 0 8px; color: var(--text-secondary); }
-    p { margin-bottom: 12px; color: var(--text-secondary); }
-
-    /* EXCLUDE BADGE */
-    .exclude-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--exclude);
-      background: var(--exclude-bg);
-      padding: 4px 10px;
-      border-radius: 100px;
-      margin-left: auto;
-      border: 1px solid rgba(239,68,68,0.15);
-    }
-    .exclude-section { border-color: rgba(239,68,68,0.15); }
-    .exclude-section .section-title { border-bottom-color: rgba(239,68,68,0.2); }
-
-    /* TABLES */
-    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 16px 0; border-radius: var(--radius-sm); overflow: hidden; }
-    th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
-    th { background: var(--bg-table-head); font-weight: 600; color: var(--text); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; }
-    tr:nth-child(even) td { background: var(--bg-table-alt); }
-    tr:hover td { background: var(--accent-light); }
-
-    /* CODE */
-    code { font-family: var(--font-mono); font-size: 0.85em; background: var(--bg-code); padding: 2px 6px; border-radius: 4px; color: var(--accent); font-weight: 500; }
-    pre { background: var(--bg-code); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px 20px; overflow-x: auto; margin: 12px 0; }
-    pre code { background: none; padding: 0; color: var(--text); font-size: 0.84rem; line-height: 1.7; }
-
-    /* FORMULA */
-    .formula { background: var(--bg-code); border-left: 3px solid var(--accent); padding: 14px 18px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 14px 0; font-family: var(--font-mono); font-size: 0.9rem; }
-
-    /* ANSWER */
-    .answer { background: rgba(16,185,129,0.06); border: 1px solid rgba(16,185,129,0.2); border-radius: var(--radius-sm); padding: 16px 20px; margin-top: 16px; }
-    .answer-label { display: inline-flex; align-items: center; gap: 4px; font-size: 0.78rem; font-weight: 700; color: var(--success); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; }
-
-    /* TIPS */
-    .tip { background: var(--accent-light); border: 1px solid rgba(45,90,245,0.15); border-radius: var(--radius-sm); padding: 14px 18px; margin: 16px 0; font-size: 0.92rem; }
-    .tip-title { font-weight: 600; color: var(--accent); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
-    .exclude-box { background: var(--exclude-bg); border: 1px solid rgba(239,68,68,0.15); border-radius: var(--radius-sm); padding: 14px 18px; margin: 16px 0; font-size: 0.92rem; }
-    .exclude-box-title { font-weight: 600; color: var(--exclude); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
-
-    /* HIGHLIGHT */
-    .hl { color: var(--accent); font-weight: 600; }
-    .hl-red { color: var(--danger); font-weight: 600; }
-    .hl-green { color: var(--success); font-weight: 600; }
-    .hl-orange { color: var(--warning); font-weight: 600; }
-
-    /* EXERCISE */
-    .exercise { border: 1px solid var(--border); border-radius: var(--radius-sm); margin: 20px 0; overflow: hidden; }
-    .exercise-header { background: var(--bg-table-head); padding: 16px 20px; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
-    .exercise-header .num { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; background: var(--accent); color: #fff; font-size: 0.78rem; font-weight: 700; border-radius: 6px; flex-shrink: 0; }
-    .exercise-body { padding: 20px; }
-    .exercise-body h5 { font-size: 0.9rem; font-weight: 600; color: var(--text); margin: 16px 0 8px; }
-    .exercise-body h5:first-child { margin-top: 0; }
-
-    /* RESPONSIVE */
-    @media (max-width: 640px) {
-      .section { padding: 20px; }
-      .hero-inner { padding: 36px 20px 28px; }
-      .main { padding: 24px 16px 60px; }
-      th, td { padding: 8px 10px; font-size: 0.82rem; }
-    }
-
-    /* SCROLL REVEAL */
-    .section { opacity: 0; transform: translateY(20px); animation: reveal 0.5s ease forwards; }
-    .section:nth-child(1) { animation-delay: 0.05s; }
-    .section:nth-child(2) { animation-delay: 0.1s; }
-    .section:nth-child(3) { animation-delay: 0.15s; }
-    .section:nth-child(4) { animation-delay: 0.2s; }
-    .section:nth-child(5) { animation-delay: 0.25s; }
-    .section:nth-child(6) { animation-delay: 0.3s; }
-    .section:nth-child(7) { animation-delay: 0.35s; }
-    .section:nth-child(8) { animation-delay: 0.4s; }
-    .section:nth-child(9) { animation-delay: 0.45s; }
-    @keyframes reveal { to { opacity: 1; transform: translateY(0); } }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>操作系统 · 全章节复习汇总（完整版）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #f8f9fb; --bg-card: #fff; --bg-code: #f1f3f6; --bg-table-head: #f0f2f7; --bg-table-alt: #fafbfd; --text: #1a1d2e; --text-secondary: #5a6078; --text-muted: #8a90a8; --border: #e2e5ee; --accent: #2d5af5; --accent-light: #e8eeff; --accent2: #0ea5e9; --accent3: #10b981; --danger: #ef4444; --warning: #f59e0b; --success: #10b981; --exclude: #f87171; --exclude-bg: #fef2f2; --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04); --shadow-hover: 0 4px 6px rgba(0,0,0,0.05), 0 10px 24px rgba(0,0,0,0.06); --radius: 12px; --radius-sm: 8px; --font-body: 'Inter','Noto Serif SC',-apple-system,sans-serif; --font-serif: 'Noto Serif SC',serif; --font-mono: 'JetBrains Mono',monospace; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #0f111a; --bg-card: #181b2a; --bg-code: #1e2235; --bg-table-head: #1e2235; --bg-table-alt: #141724; --text: #e4e6f0; --text-secondary: #9ca3b8; --text-muted: #6b728e; --border: #2a2f45; --accent: #4d7bff; --accent-light: #1a2244; --accent2: #38bdf8; --accent3: #34d399; --danger: #f87171; --warning: #fbbf24; --success: #34d399; --exclude: #f87171; --exclude-bg: #2a1a1a; --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.2); --shadow-hover: 0 4px 6px rgba(0,0,0,0.25), 0 10px 24px rgba(0,0,0,0.3); } }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; font-size:16px; }
+  body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height:1.75; min-height:100vh; -webkit-font-smoothing:antialiased; }
+  .hero { position:relative; overflow:hidden; background: var(--bg-card); border-bottom:1px solid var(--border); }
+  .hero::before { content:''; position:absolute; inset:0; background: radial-gradient(ellipse 80% 50% at 20% 50%, rgba(45,90,245,0.08) 0%, transparent 60%), radial-gradient(ellipse 60% 40% at 80% 30%, rgba(14,165,233,0.06) 0%, transparent 50%); pointer-events:none; }
+  .hero-inner { max-width:900px; margin:0 auto; padding:56px 24px 40px; position:relative; }
+  .hero-badge { display:inline-flex; align-items:center; gap:6px; font-size:0.78rem; font-weight:600; color: var(--accent); background: var(--accent-light); padding:6px 14px; border-radius:100px; margin-bottom:20px; letter-spacing:0.02em; }
+  .hero h1 { font-family: var(--font-serif); font-size: clamp(1.8rem, 5vw, 2.6rem); font-weight:700; line-height:1.25; margin-bottom:12px; letter-spacing:-0.02em; }
+  .hero-desc { color: var(--text-secondary); font-size:1.05rem; max-width:600px; }
+  .hero-exam-range { margin-top:20px; padding:16px 20px; background: var(--accent-light); border-radius: var(--radius-sm); font-size:0.9rem; color: var(--text-secondary); }
+  .hero-exam-range strong { color: var(--accent); }
+  .nav-bar { position:sticky; top:0; z-index:50; background: color-mix(in srgb, var(--bg-card) 90%, transparent); backdrop-filter:blur(16px) saturate(1.4); -webkit-backdrop-filter:blur(16px) saturate(1.4); border-bottom:1px solid var(--border); }
+  .nav-inner { max-width:900px; margin:0 auto; padding:0 24px; display:flex; gap:4px; overflow-x:auto; scrollbar-width:none; }
+  .nav-inner::-webkit-scrollbar { display:none; }
+  .nav-item { flex-shrink:0; padding:14px 16px; font-size:0.85rem; font-weight:500; color: var(--text-muted); text-decoration:none; border-bottom:2px solid transparent; transition:all 0.2s ease; white-space:nowrap; }
+  .nav-item:hover { color: var(--accent); }
+  .nav-item.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .nav-item.exclude { color: var(--exclude); }
+  .main { max-width:900px; margin:0 auto; padding:40px 24px 80px; }
+  .section { background: var(--bg-card); border:1px solid var(--border); border-radius: var(--radius); padding:32px; margin-bottom:24px; box-shadow: var(--shadow); transition:box-shadow 0.3s ease; }
+  .section:hover { box-shadow: var(--shadow-hover); }
+  .section-title { font-family: var(--font-serif); font-size:1.45rem; font-weight:700; margin-bottom:20px; padding-bottom:12px; border-bottom:2px solid var(--border); display:flex; align-items:center; gap:10px; }
+  .section-title .icon { width:28px; height:28px; display:flex; align-items:center; justify-content:center; border-radius:8px; font-size:0.9rem; }
+  .ch2 .icon { background: var(--accent-light); color: var(--accent); }
+  .ch3 .icon { background: rgba(14,165,233,0.12); color: var(--accent2); }
+  .ch4 .icon { background: rgba(16,185,129,0.12); color: var(--accent3); }
+  .ch5 .icon { background: var(--accent-light); color: var(--accent); }
+  .ch6 .icon { background: rgba(245,158,11,0.12); color: var(--warning); }
+  .ch7 .icon { background: rgba(239,68,68,0.12); color: var(--danger); }
+  .ch8 .icon { background: rgba(139,92,246,0.12); color: #8b5cf6; }
+  .exclude-section .icon { background: var(--exclude-bg); color: var(--exclude); }
+  h3 { font-size:1.15rem; font-weight:600; margin:24px 0 12px; color: var(--text); }
+  h4 { font-size:0.98rem; font-weight:600; margin:18px 0 8px; color: var(--text-secondary); }
+  p { margin-bottom:12px; color: var(--text-secondary); }
+  .exclude-badge { display:inline-flex; align-items:center; gap:6px; font-size:0.78rem; font-weight:600; color: var(--exclude); background: var(--exclude-bg); padding:4px 10px; border-radius:100px; margin-left:auto; border:1px solid rgba(239,68,68,0.15); }
+  .exclude-section { border-color: rgba(239,68,68,0.15); }
+  .exclude-section .section-title { border-bottom-color: rgba(239,68,68,0.2); }
+  table { width:100%; border-collapse:collapse; font-size:0.88rem; margin:16px 0; border-radius: var(--radius-sm); overflow:hidden; }
+  th, td { padding:10px 14px; text-align:left; border-bottom:1px solid var(--border); }
+  th { background: var(--bg-table-head); font-weight:600; color: var(--text); font-size:0.82rem; text-transform:uppercase; letter-spacing:0.04em; }
+  tr:nth-child(even) td { background: var(--bg-table-alt); }
+  tr:hover td { background: var(--accent-light); }
+  code { font-family: var(--font-mono); font-size:0.85em; background: var(--bg-code); padding:2px 6px; border-radius:4px; color: var(--accent); font-weight:500; }
+  pre { background: var(--bg-code); border:1px solid var(--border); border-radius: var(--radius-sm); padding:16px 20px; overflow-x:auto; margin:12px 0; }
+  pre code { background:none; padding:0; color: var(--text); font-size:0.84rem; line-height:1.7; }
+  .formula { background: var(--bg-code); border-left:3px solid var(--accent); padding:14px 18px; border-radius:0 var(--radius-sm) var(--radius-sm) 0; margin:14px 0; font-family: var(--font-mono); font-size:0.9rem; }
+  .answer { background: rgba(16,185,129,0.06); border:1px solid rgba(16,185,129,0.2); border-radius: var(--radius-sm); padding:16px 20px; margin-top:16px; }
+  .answer-label { display:inline-flex; align-items:center; gap:4px; font-size:0.78rem; font-weight:700; color: var(--success); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:8px; }
+  .tip { background: var(--accent-light); border:1px solid rgba(45,90,245,0.15); border-radius: var(--radius-sm); padding:14px 18px; margin:16px 0; font-size:0.92rem; }
+  .tip-title { font-weight:600; color: var(--accent); margin-bottom:4px; display:flex; align-items:center; gap:6px; }
+  .exclude-box { background: var(--exclude-bg); border:1px solid rgba(239,68,68,0.15); border-radius: var(--radius-sm); padding:14px 18px; margin:16px 0; font-size:0.92rem; }
+  .exclude-box-title { font-weight:600; color: var(--exclude); margin-bottom:4px; display:flex; align-items:center; gap:6px; }
+  .hl { color: var(--accent); font-weight:600; }
+  .hl-red { color: var(--danger); font-weight:600; }
+  .hl-green { color: var(--success); font-weight:600; }
+  .hl-orange { color: var(--warning); font-weight:600; }
+  .exercise { border:1px solid var(--border); border-radius: var(--radius-sm); margin:20px 0; overflow:hidden; }
+  .exercise-header { background: var(--bg-table-head); padding:16px 20px; font-weight:600; font-size:0.95rem; display:flex; align-items:center; gap:8px; }
+  .exercise-header .num { display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; background: var(--accent); color:#fff; font-size:0.78rem; font-weight:700; border-radius:6px; flex-shrink:0; }
+  .exercise-body { padding:20px; }
+  .exercise-body h5 { font-size:0.9rem; font-weight:600; color: var(--text); margin:16px 0 8px; }
+  .exercise-body h5:first-child { margin-top:0; }
+  .tag { display:inline-flex; align-items:center; gap:4px; font-size:0.72rem; font-weight:600; padding:3px 8px; border-radius:100px; margin-left:auto; }
+  .tag-ok { background: rgba(16,185,129,0.12); color: var(--success); }
+  .tag-no { background: var(--exclude-bg); color: var(--exclude); }
+  ul { margin:8px 0 12px 20px; color: var(--text-secondary); }
+  ol { margin:8px 0 12px 20px; color: var(--text-secondary); }
+  @media (max-width:640px) { .section { padding:20px; } .hero-inner { padding:36px 20px 28px; } .main { padding:24px 16px 60px; } th, td { padding:8px 10px; font-size:0.82rem; } }
+  .section { opacity:0; transform:translateY(20px); animation:reveal 0.5s ease forwards; }
+  .section:nth-child(1) { animation-delay:0.05s; } .section:nth-child(2) { animation-delay:0.1s; } .section:nth-child(3) { animation-delay:0.15s; } .section:nth-child(4) { animation-delay:0.2s; } .section:nth-child(5) { animation-delay:0.25s; } .section:nth-child(6) { animation-delay:0.3s; } .section:nth-child(7) { animation-delay:0.35s; } .section:nth-child(8) { animation-delay:0.4s; } .section:nth-child(9) { animation-delay:0.45s; }
+  @keyframes reveal { to { opacity:1; transform:translateY(0); } }
+</style>
 </head>
 <body>
 
-  <!-- HERO -->
-  <header class="hero">
-    <div class="hero-inner">
-      <div class="hero-badge">📚 操作系统期末复习</div>
-      <h1>全章节复习汇总</h1>
-      <p class="hero-desc">按考试范围（Ch2 ~ 8.1）整理的概念与习题，标注排除内容。</p>
-      <div class="hero-exam-range">
-        <strong>考试范围：</strong>第2章 ~ 第8章8.1节 &nbsp;|&nbsp; <strong>题型：</strong>概念分析题 + 计算题
-      </div>
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">📚 操作系统期末复习</div>
+    <h1>全章节复习汇总（完整版）</h1>
+    <p class="hero-desc">按考试范围（Ch2 ~ 8.1）整理的概念与习题，范围内的题标记 ✅，范围外的题标记 ❌。</p>
+    <div class="hero-exam-range">
+      <strong>考试范围：</strong>第2章 ~ 第8章8.1节 &nbsp;|&nbsp; <strong>题型：</strong>概念分析题 + 计算题
     </div>
-  </header>
+  </div>
+</header>
 
-  <!-- NAV -->
-  <nav class="nav-bar">
-    <div class="nav-inner">
-      <a href="#ch2" class="nav-item">Ch2</a>
-      <a href="#ch3" class="nav-item">Ch3</a>
-      <a href="#ch4" class="nav-item">Ch4</a>
-      <a href="#ch5" class="nav-item">Ch5</a>
-      <a href="#ch6" class="nav-item">Ch6</a>
-      <a href="#ch7" class="nav-item">Ch7</a>
-      <a href="#ch8" class="nav-item">Ch8</a>
-      <a href="#exclude" class="nav-item exclude">❌ 排除</a>
-    </div>
-  </nav>
+<nav class="nav-bar">
+  <div class="nav-inner">
+    <a href="#ch1" class="nav-item exclude">Ch1</a>
+    <a href="#ch2" class="nav-item">Ch2</a>
+    <a href="#ch3" class="nav-item">Ch3</a>
+    <a href="#ch4" class="nav-item">Ch4</a>
+    <a href="#ch5" class="nav-item">Ch5</a>
+    <a href="#ch6" class="nav-item">Ch6</a>
+    <a href="#ch7" class="nav-item">Ch7</a>
+    <a href="#ch8" class="nav-item">Ch8</a>
+    <a href="#exclude" class="nav-item exclude">❌ 排除</a>
+  </div>
+</nav>
 
-  <!-- MAIN -->
-  <main class="main">
+<main class="main">
 
-    <!-- ========== CH1: EXCLUDED ========== -->
-    <section class="section exclude-section" id="ch1">
-      <h2 class="section-title">
-        <span class="icon">Ch1</span> 第1章 操作系统引论
-        <span class="exclude-badge">❌ 全部不考</span>
-      </h2>
-      <p>第1章内容不在本次考试范围内，无需复习。</p>
-    </section>
+<!-- CH1 -->
+<section class="section exclude-section" id="ch1">
+  <h2 class="section-title"><span class="icon">Ch1</span> 第1章 操作系统引论 <span class="exclude-badge">❌ 全部不考</span></h2>
+  <p>第1章内容不在本次考试范围内，无需复习。</p>
+</section>
 
-    <!-- ========== CH2 ========== -->
-    <section class="section ch2" id="ch2">
-      <h2 class="section-title"><span class="icon">Ch2</span> 第2章 进程管理</h2>
+<!-- CH2 -->
+<section class="section ch2" id="ch2">
+  <h2 class="section-title"><span class="icon">Ch2</span> 第2章 进程管理（全部在考试范围内 ✅）</h2>
 
-      <h3>2.1 进程的定义与特征（必考概念）</h3>
-      <p><strong>进程定义</strong>：进程是进程实体的运行过程，是系统进行资源分配和调度的一个独立单位。</p>
-      <p><strong>进程与程序的区别</strong>：</p>
-      <ul style="margin: 8px 0 12px 20px; color: var(--text-secondary);">
-        <li>程序是指令的集合，<strong>静态概念</strong>；进程是程序在处理机上的一次执行过程，<strong>动态概念</strong></li>
-        <li>程序长期存在；进程有生命周期（创建、活动、消亡）</li>
-        <li>程序仅是指令的有序集合；进程由<strong>程序、数据和进程控制块（PCB）</strong>组成</li>
-        <li>进程与程序<strong>不是一一对应</strong>的：同一程序可对应多个进程，一个进程可执行多个程序</li>
-      </ul>
+  <h3>2.1 进程的定义与特征（必考概念）</h3>
+  <p><strong>进程定义</strong>：进程是进程实体的运行过程，是系统进行资源分配和调度的一个独立单位。</p>
+  <p><strong>进程与程序的区别</strong>：</p>
+  <ul>
+    <li>程序是指令的集合，<strong>静态概念</strong>；进程是程序在处理机上的一次执行过程，<strong>动态概念</strong></li>
+    <li>程序长期存在；进程有生命周期（创建、活动、消亡）</li>
+    <li>程序仅是指令的有序集合；进程由<strong>程序、数据和进程控制块（PCB）</strong>组成</li>
+    <li>进程与程序<strong>不是一一对应</strong>的：同一程序可对应多个进程，一个进程可执行多个程序</li>
+  </ul>
 
-      <h3>2.2 进程的三种基本状态</h3>
-      <pre><code>        就绪 ──────→ 执行
+  <h3>2.2 进程的三种基本状态</h3>
+  <pre><code>        就绪 ──────→ 执行
          ↑            │
          │     时间片完│
          │            ↓
         I/O完成 ←─── 阻塞
                     I/O请求</code></pre>
-      <ul style="margin: 8px 0 12px 20px; color: var(--text-secondary);">
-        <li><strong>就绪</strong>：进程已分配到除CPU以外的所有必要资源，只要再获得CPU就可以执行</li>
-        <li><strong>执行</strong>：进程已获得CPU，正在执行</li>
-        <li><strong>阻塞</strong>：正在执行的进程由于发生某事件而暂时无法继续执行时放弃CPU</li>
-      </ul>
+  <ul>
+    <li><strong>就绪</strong>：进程已分配到除CPU以外的所有必要资源，只要再获得CPU就可以执行</li>
+    <li><strong>执行</strong>：进程已获得CPU，正在执行</li>
+    <li><strong>阻塞</strong>：正在执行的进程由于发生某事件而暂时无法继续执行时放弃CPU</li>
+  </ul>
 
-      <h3>2.3 进程控制块 PCB（重点）</h3>
-      <p>PCB 是进程存在的<strong>唯一标志</strong>，包含：进程标识符（pid）、进程状态、现场信息（寄存器等）、优先级、阻塞原因、程序地址、同步机制、资源清单、链接指针。</p>
+  <h3>2.3 进程控制块 PCB（重点）</h3>
+  <p>PCB 是进程存在的<strong>唯一标志</strong>，包含：进程标识符（pid）、进程状态、现场信息（寄存器等）、优先级、阻塞原因、程序地址、同步机制、资源清单、链接指针。</p>
 
-      <h3>2.4 线程的基本概念</h3>
-      <ul style="margin: 8px 0 12px 20px; color: var(--text-secondary);">
-        <li>线程是<strong>调度和分派的基本单位</strong></li>
-        <li>进程是<strong>拥有资源的基本单位</strong></li>
-        <li>一个进程可以有多个线程，它们共享进程的资源</li>
-      </ul>
+  <h3>2.4 线程的基本概念</h3>
+  <ul>
+    <li>线程是<strong>调度和分派的基本单位</strong></li>
+    <li>进程是<strong>拥有资源的基本单位</strong></li>
+    <li>一个进程可以有多个线程，它们共享进程的资源</li>
+  </ul>
 
-      <h3>2.5 PV 操作（计算题 · 10分）</h3>
-      <h4>核心要点</h4>
-      <ul style="margin: 8px 0 12px 20px; color: var(--text-secondary);">
-        <li>PV操作有共享变量信号量存在，所以其程序是一个临界区</li>
-        <li>PV操作是<strong>原子操作</strong>，执行时不可中断</li>
-        <li>信号量只能通过PV操作改变其值</li>
-        <li><strong>互斥的模式</strong>：PV总是成对出现在<strong>同一进程</strong>中</li>
-        <li><strong>同步的模式</strong>：PV总是成对出现在<strong>不同进程</strong>中</li>
-        <li><strong>前驱关系</strong>：有多少前驱关系设置多少个信号量（初值0）；有多少前驱做多少P操作，有多少后继做多少V操作</li>
-      </ul>
+  <h3>2.5 PV 操作（计算题 · 10分）</h3>
+  <h4>核心要点</h4>
+  <ul>
+    <li>PV操作有共享变量信号量存在，所以其程序是一个临界区</li>
+    <li>PV操作是<strong>原子操作</strong>，执行时不可中断</li>
+    <li>信号量只能通过PV操作改变其值</li>
+    <li><strong>互斥的模式</strong>：PV总是成对出现在<strong>同一进程</strong>中</li>
+    <li><strong>同步的模式</strong>：PV总是成对出现在<strong>不同进程</strong>中</li>
+    <li><strong>前驱关系</strong>：有多少前驱关系设置多少个信号量（初值0）；有多少前驱做多少P操作，有多少后继做多少V操作</li>
+  </ul>
 
-      <h4>经典例题：爸爸/女儿/儿子 水果盘问题（课件原题）</h4>
-      <p>桌上有一空盘，允许存放一只水果，爸爸可向盘内放苹果或桔子，儿子专等吃桔子，女儿专等吃苹果。</p>
-      <pre><code>semaphore s, so, sa = 1, 0, 0;  // s:盘子互斥, so:桔子, sa:苹果
+  <h4>经典例题：爸爸/女儿/儿子 水果盘问题（课件原题）</h4>
+  <pre><code>semaphore s, so, sa = 1, 0, 0;  // s:盘子互斥, so:桔子, sa:苹果
 
 father() {
     while(1) {
@@ -407,13 +195,10 @@ daughter() {
         吃苹果；
     }
 }</code></pre>
-      <div class="tip">
-        <div class="tip-title">💡 本质</div>
-        生产者-消费者问题的一种变形，生产者放入的产品有两类，消费者也有两类，每类消费者只消费其中固定的一类产品。
-      </div>
+  <div class="tip"><div class="tip-title">💡 本质</div>生产者-消费者问题的一种变形，生产者放入的产品有两类，消费者也有两类，每类消费者只消费其中固定的一类产品。</div>
 
-      <h4>另一个例题：单缓冲区采集与计算</h4>
-      <pre><code>semaphore empty, full = 1, 0;
+  <h4>另一个例题：单缓冲区采集与计算</h4>
+  <pre><code>semaphore empty, full = 1, 0;
 
 process1() {  // 采集进程
     while(1) {
@@ -430,523 +215,468 @@ process2() {  // 计算进程
         signal(empty);  // V(empty)
     }
 }</code></pre>
-    </section>
 
-    <!-- ========== CH3 ========== -->
-    <section class="section ch3" id="ch3">
-      <h2 class="section-title"><span class="icon">Ch3</span> 第3章 处理机调度与死锁</h2>
+  <h3>2.6 课后习题（Ch2 全部在考试范围内 ✅）</h3>
+  <table>
+    <tr><th>题号</th><th>题目内容</th><th>类型</th></tr>
+    <tr><td>2-1</td><td>进程与程序的区别和联系</td><td>概念</td></tr>
+    <tr><td>2-2</td><td>进程的基本状态及转换</td><td>概念</td></tr>
+    <tr><td>2-3</td><td>进程控制块PCB的作用与内容</td><td>概念</td></tr>
+    <tr><td>2-4</td><td>线程与进程的区别</td><td>概念</td></tr>
+    <tr><td>2-5</td><td>原语的概念与特点</td><td>概念</td></tr>
+    <tr><td>2-6</td><td>临界区、临界资源的概念</td><td>概念</td></tr>
+    <tr><td>2-7</td><td>同步与互斥的区别</td><td>概念</td></tr>
+    <tr><td>2-8</td><td>为什么PV操作是原子操作？信号量只能通过PV改变</td><td>概念</td></tr>
+    <tr><td>2-9</td><td>互斥模式 vs 同步模式：PV成对出现的位置有什么不同？</td><td>概念</td></tr>
+    <tr><td>2-10</td><td>前驱关系的信号量设置规则</td><td>概念</td></tr>
+    <tr><td>2-11</td><td><strong>水果盘问题</strong>（爸爸放水果，儿子吃桔子，女儿吃苹果）</td><td>计算</td></tr>
+    <tr><td>2-12</td><td><strong>单缓冲区采集与计算</strong>（PV操作实现）</td><td>计算</td></tr>
+    <tr><td>2-13</td><td><strong>生产者-消费者问题</strong>（多缓冲）</td><td>计算</td></tr>
+    <tr><td>2-14</td><td><strong>读者-写者问题</strong>（读共享、写互斥）</td><td>计算</td></tr>
+    <tr><td>2-15</td><td><strong>哲学家进餐问题</strong>（5人5叉，防死锁）</td><td>计算</td></tr>
+    <tr><td>2-16</td><td><strong>进程PA/PB/PC文件打印</strong>（PA读→PB复制→PC打印，用PV）</td><td>计算</td></tr>
+    <tr><td>2-17</td><td><strong>独木桥问题</strong>（PV解决互斥过桥）</td><td>计算</td></tr>
+    <tr><td>2-18</td><td><strong>四位哲学家两把刀两把叉</strong>（必须一刀一叉才能进餐）</td><td>计算</td></tr>
+    <tr><td>2-19</td><td><strong>老和尚小和尚提水</strong>（井、桶、缸的PV操作）</td><td>计算</td></tr>
+  </table>
+</section>
 
-      <h3>3.1 调度算法（计算题 · 10分）</h3>
-      <div class="exclude-box">
-        <div class="exclude-box-title">🚫 排除不考</div>
-        轮转法（RR）、实时调度（EDF、松弛度）、多级反馈队列
-      </div>
+<!-- CH3 -->
+<section class="section ch3" id="ch3">
+  <h2 class="section-title"><span class="icon">Ch3</span> 第3章 处理机调度与死锁</h2>
 
-      <h4>1. 先来先服务 FCFS</h4>
-      <p>按作业/进程到达的先后顺序进行调度。</p>
-      <p><strong>特点</strong>：简单，有利于长作业，对短作业不利。</p>
-      <p><strong>计算公式</strong>：周转时间 = 完成时间 - 到达时间；带权周转时间 = 周转时间 / 服务时间</p>
+  <div class="exclude-box"><div class="exclude-box-title">🚫 排除不考</div>轮转法（RR）、实时调度（EDF、松弛度）、多级反馈队列</div>
 
-      <div class="exercise">
-        <div class="exercise-header"><span class="num">例</span> FCFS 调度计算</div>
-        <div class="exercise-body">
-          <table>
-            <tr><th>进程</th><th>到达时间</th><th>服务时间</th><th>FCFS完成</th><th>周转时间</th><th>带权周转</th></tr>
-            <tr><td>A</td><td>0</td><td>4</td><td>4</td><td>4</td><td>1</td></tr>
-            <tr><td>B</td><td>1</td><td>3</td><td>7</td><td>6</td><td>2</td></tr>
-            <tr><td>C</td><td>2</td><td>5</td><td>12</td><td>10</td><td>2</td></tr>
-            <tr><td>D</td><td>3</td><td>2</td><td>14</td><td>11</td><td>5.5</td></tr>
-            <tr><td>E</td><td>4</td><td>4</td><td>18</td><td>14</td><td>3.5</td></tr>
-          </table>
-          <div class="answer">
-            <div class="answer-label">结果</div>
-            <p>平均周转时间 = (4+6+10+11+14)/5 = <span class="hl">9</span></p>
-            <p>平均带权周转时间 = (1+2+2+5.5+3.5)/5 = <span class="hl">2.8</span></p>
-          </div>
-        </div>
-      </div>
+  <h3>3.1 调度算法（计算题 · 10分）</h3>
+  <h4>1. 先来先服务 FCFS</h4>
+  <p>按作业/进程到达的先后顺序进行调度。<strong>特点</strong>：简单，有利于长作业，对短作业不利。</p>
+  <p>计算：周转时间 = 完成时间 - 到达时间；带权周转时间 = 周转时间 / 服务时间</p>
 
-      <h4>2. 短作业优先 SJF</h4>
-      <p>从后备队列中选择一个或若干个估计运行时间最短的作业，将它们调入内存运行。</p>
-      <p><strong>特点</strong>：降低平均周转时间，提高吞吐量；对长作业不利（饥饿）；估计时间不易确定。</p>
-      <p>同上例的SJF结果（假设同时到达）：平均周转时间 = <span class="hl">8</span>，平均带权周转时间 = <span class="hl">2.1</span></p>
-
-      <h4>3. 高响应比优先（重点）</h4>
-      <div class="formula">
-        <span class="hl">响应比 Rp</span> =（等待时间 + 服务时间）/ 服务时间
-      </div>
-      <p><strong>特点</strong>：</p>
-      <ul style="margin: 8px 0 12px 20px; color: var(--text-secondary);">
-        <li>短作业RP大（优先执行）</li>
-        <li>服务时间相同的进程间相当于FCFS</li>
-        <li>长作业等待一段时间后仍能得到服务（不会饥饿）</li>
-      </ul>
-
-      <h4>4. 优先级调度</h4>
-      <p><strong>静态优先权</strong>：整个运行期不变，简单但低优先权作业可能长期不被调度。</p>
-      <p><strong>动态优先权</strong>：如响应比优先，优先权随执行时间下降、随等待时间升高。</p>
-
-      <h3>3.2 死锁（概念分析题）</h3>
-      <h4>死锁的四个必要条件</h4>
-      <ol style="margin: 8px 0 12px 20px; color: var(--text-secondary);">
-        <li><strong>互斥条件</strong>：资源的临界性（资源的固有属性，不能避免）</li>
-        <li><strong>请求和保持条件</strong>：进程已占有资源，又申请新资源</li>
-        <li><strong>不剥夺条件</strong>：进程已获得的资源不能被剥夺</li>
-        <li><strong>环路等待条件</strong>：存在进程-资源的循环等待链</li>
-      </ol>
-
-      <h4>死锁的处理方法</h4>
-      <p><strong>1. 预防死锁</strong>：破坏四个必要条件之一</p>
-      <ul style="margin: 8px 0 12px 20px; color: var(--text-secondary);">
-        <li>摒弃请求和保持：资源一次性分配（全分配，全释放）→ AND信号量</li>
-        <li>摒弃不剥夺：新申请不能满足则释放已获得资源</li>
-        <li>摒弃环路：资源的有序分配法（为资源编号）</li>
-      </ul>
-      <p><strong>2. 避免死锁</strong>：银行家算法</p>
-      <ul style="margin: 8px 0 12px 20px; color: var(--text-secondary);">
-        <li><strong>安全状态</strong>：能找到安全序列的状态</li>
-        <li><strong>不安全状态</strong>：找不到安全序列的状态</li>
-      </ul>
-      <p><strong>3. 检测与解除</strong></p>
-
-      <h4>资源分配图</h4>
-      <p>用有向图描述进程和资源之间的分配和请求关系。圆圈表示进程，方框表示资源，方框中的圆点表示资源实例。</p>
-      <div class="tip">
-        <div class="tip-title">💡 关键结论</div>
-        如果图中存在环路，且环路中的每类资源只有一个实例，则发生死锁。
-      </div>
-    </section>
-
-    <!-- ========== CH4 ========== -->
-    <section class="section ch4" id="ch4">
-      <h2 class="section-title"><span class="icon">Ch4</span> 第4章 存储器管理</h2>
-
-      <h3>4.1 地址变换（计算题 · 10分）</h3>
-      <h4>逻辑地址 → 物理地址</h4>
-      <p><strong>基本分页</strong>：</p>
-      <ul style="margin: 8px 0 12px 20px; color: var(--text-secondary);">
-        <li>逻辑地址 A，页面大小 L</li>
-        <li>页号 P = INT[A / L]</li>
-        <li>页内偏移 d = A MOD L</li>
-        <li>物理地址 = 页表[P] × L + d</li>
-      </ul>
-
-      <div class="tip">
-        <div class="tip-title">💡 位运算技巧</div>
-        当页面尺寸为2的幂时，可以直接用位运算拆分页号和页内地址，无需除法。<br>
-        例：页大小1KB = 2<sup>10</sup>，逻辑地址4101 = 二进制 000100 0000000101<br>
-        → 页号 = 000100 = <span class="hl">4</span>，页内地址 = 0000000101 = <span class="hl">5</span>
-      </div>
-
-      <h4>快表 TLB</h4>
-      <p>高速缓存，存放最近访问的页表项。若命中则无需访问内存中的页表，加快地址变换速度。</p>
-
-      <h4>两级页表</h4>
-      <p>将页表再分页，解决页表过长的问题。查找路径：外层页表 → 内层页表 → 物理块。</p>
-
-      <h3>4.2 课后习题</h3>
-
-      <div class="exercise">
-        <div class="exercise-header"><span class="num">1</span> 地址格式与页表计算</div>
-        <div class="exercise-body">
-          <h5>题目</h5>
-          <p>某系统采用页式存储管理策略，拥有逻辑空间32页，每页2K，拥有物理空间1M。</p>
-          <p>(1) 写出逻辑地址的格式。(2) 进程页表有多少项？每项至少多少位？(3) 物理空间减少一半，页表如何变化？</p>
-          <div class="answer">
-            <div class="answer-label">解答</div>
-            <p>(1) 页号需<strong>5位</strong>，页内地址需<strong>11位</strong>。</p>
-            <p>(2) 页表项数 = <strong>32</strong>；1M物理空间可分为2<sup>9</sup>个内存块，每项至少<strong>9位</strong>。</p>
-            <p>(3) 页表项数<strong>不变</strong>，每项长度可<strong>减少1位</strong>。</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="exercise">
-        <div class="exercise-header"><span class="num">2</span> 逻辑地址转物理地址</div>
-        <div class="exercise-body">
-          <h5>题目</h5>
-          <p>主存64K，页面大小1K，4页大的作业，0、1、2、3页分别分配到主存的2、4、6、7块中。将逻辑地址1023、2500、3500、4500转换成物理地址。</p>
-          <div class="answer">
-            <div class="answer-label">解答</div>
-            <table>
-              <tr><th>逻辑地址</th><th>页号</th><th>页内地址</th><th>物理块号</th><th>物理地址</th></tr>
-              <tr><td>1023</td><td>0</td><td>1023</td><td>2</td><td><span class="hl">3071</span></td></tr>
-              <tr><td>2500</td><td>2</td><td>452</td><td>6</td><td><span class="hl">6596</span></td></tr>
-              <tr><td>3500</td><td>3</td><td>428</td><td>7</td><td><span class="hl">7596</span></td></tr>
-              <tr><td>4500</td><td>4</td><td>404</td><td>—</td><td><span class="hl-red">越界中断</span></td></tr>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <div class="exercise">
-        <div class="exercise-header"><span class="num">3</span> TLB 与内存访问时间</div>
-        <div class="exercise-body">
-          <h5>题目</h5>
-          <p>页表存放在主存中，一次存取需1.5μs。(1) 实现一次页面访问的存取时间？(2) 加快表后平均命中率85%，快表查找时间忽略为0，此时存取时间？</p>
-          <div class="answer">
-            <div class="answer-label">解答</div>
-            <p>(1) 需两次访问主存（查页表 + 取数据）：1.5 × 2 = <span class="hl">3 μs</span></p>
-            <p>(2) 0.85 × 1.5 + (1 − 0.85) × 2 × 1.5 = <span class="hl">1.725 μs</span></p>
-          </div>
-        </div>
-      </div>
-
-      <div class="exercise">
-        <div class="exercise-header"><span class="num">4</span> 内存分配算法</div>
-        <div class="exercise-body">
-          <h5>题目</h5>
-          <p>空闲区大小：10K, 4K, 20K, 18K, 7K, 9K, 12K, 15K。请求：12K, 10K, 9K。分别用循环适应和最佳适应算法。</p>
-          <div class="answer">
-            <div class="answer-label">解答</div>
-            <p>循环适应：<span class="hl">20K, 18K, 9K</span></p>
-            <p>最佳适应：<span class="hl">12K, 10K, 9K</span></p>
-          </div>
-        </div>
-      </div>
-
-      <div class="exercise">
-        <div class="exercise-header"><span class="num">5</span> 段式地址变换</div>
-        <div class="exercise-body">
-          <h5>题目</h5>
-          <p>将逻辑地址(0,137)、(1,4000)、(2,3600)、(5,230)转换成物理地址。</p>
-          <table>
-            <tr><th>段号</th><th>基址</th><th>段长</th></tr>
-            <tr><td>0</td><td>50K</td><td>10K</td></tr>
-            <tr><td>1</td><td>60K</td><td>3K</td></tr>
-            <tr><td>2</td><td>70K</td><td>5K</td></tr>
-            <tr><td>3</td><td>120K</td><td>8K</td></tr>
-          </table>
-          <div class="answer">
-            <div class="answer-label">解答</div>
-            <p>(0,137) → 50K+137 = <span class="hl">51337</span></p>
-            <p>(1,4000) → 4000 > 3K(3072) → <span class="hl-red">越界中断</span></p>
-            <p>(2,3600) → 70K+3600 = <span class="hl">75280</span></p>
-            <p>(5,230) → 段号超出段表 → <span class="hl-red">越界中断</span></p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== CH5 ========== -->
-    <section class="section ch5" id="ch5">
-      <h2 class="section-title"><span class="icon">Ch5</span> 第5章 虚拟存储器</h2>
-
-      <h3>5.1 页面置换算法（计算题 · 10分）</h3>
-      <div class="exclude-box">
-        <div class="exclude-box-title">🚫 排除不考</div>
-        Clock置换算法（简单Clock和改进型Clock）
-      </div>
-
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">例</span> FCFS 调度计算</div>
+    <div class="exercise-body">
       <table>
-        <tr><th>算法</th><th>策略</th><th>特点</th></tr>
-        <tr><td><strong>OPT</strong></td><td>淘汰以后永不使用或最长时间不再被访问的页</td><td>理论最优，无法实现</td></tr>
-        <tr><td><strong>FIFO</strong></td><td>淘汰最早进入内存的页</td><td>可能出现 <span class="hl-red">Belady 异常</span></td></tr>
-        <tr><td><strong>LRU</strong></td><td>淘汰最近一段时间最久未被访问的页</td><td>性能接近 OPT，实际常用</td></tr>
+        <tr><th>进程</th><th>到达时间</th><th>服务时间</th><th>FCFS完成</th><th>周转时间</th><th>带权周转</th></tr>
+        <tr><td>A</td><td>0</td><td>4</td><td>4</td><td>4</td><td>1</td></tr>
+        <tr><td>B</td><td>1</td><td>3</td><td>7</td><td>6</td><td>2</td></tr>
+        <tr><td>C</td><td>2</td><td>5</td><td>12</td><td>10</td><td>2</td></tr>
+        <tr><td>D</td><td>3</td><td>2</td><td>14</td><td>11</td><td>5.5</td></tr>
+        <tr><td>E</td><td>4</td><td>4</td><td>18</td><td>14</td><td>3.5</td></tr>
       </table>
+      <div class="answer"><div class="answer-label">结果</div><p>平均周转时间 = (4+6+10+11+14)/5 = <span class="hl">9</span></p><p>平均带权周转时间 = (1+2+2+5.5+3.5)/5 = <span class="hl">2.8</span></p></div>
+    </div>
+  </div>
 
-      <h4>缺页率计算</h4>
-      <div class="formula">
-        <span class="hl">缺页率</span> = 缺页次数 / 总访问次数
-      </div>
+  <h4>2. 短作业优先 SJF</h4>
+  <p>从后备队列中选择一个或若干个估计运行时间最短的作业。<strong>特点</strong>：降低平均周转时间，提高吞吐量；对长作业不利（饥饿）。</p>
 
-      <h4>有效访问时间</h4>
-      <div class="formula">
-        有效访问时间 = (1 − p) × t + p × f<br>
-        <span style="color: var(--text-muted);">p=缺页率, t=内存访问时间, f=缺页中断时间</span>
-      </div>
+  <h4>3. 高响应比优先（重点）</h4>
+  <div class="formula"><span class="hl">响应比 Rp</span> =（等待时间 + 服务时间）/ 服务时间</div>
+  <ul><li>短作业RP大（优先执行）</li><li>服务时间相同的进程间相当于FCFS</li><li>长作业等待一段时间后仍能得到服务（不会饥饿）</li></ul>
 
-      <h4>请求分页的基本概念</h4>
-      <ul style="margin: 8px 0 12px 20px; color: var(--text-secondary);">
-        <li><strong>局部性原理</strong>：时间局部性（循环）+ 空间局部性（顺序）</li>
-        <li>虚拟存储器特征：<strong>离散性、多次性、对换性、虚拟性</strong></li>
-        <li><strong>页表项</strong>：页号 | 物理块号 | 状态位P | 访问字段A | 修改位M | 外存地址</li>
-      </ul>
+  <h4>4. 优先级调度</h4>
+  <p><strong>静态优先权</strong>：整个运行期不变，简单但低优先权作业可能长期不被调度。</p>
+  <p><strong>动态优先权</strong>：如响应比优先，优先权随执行时间下降、随等待时间升高。</p>
 
-      <h3>5.2 课后习题</h3>
+  <h3>3.2 死锁（概念分析题）</h3>
+  <h4>死锁的四个必要条件</h4>
+  <ol><li><strong>互斥条件</strong>：资源的临界性（资源的固有属性，不能避免）</li><li><strong>请求和保持条件</strong>：进程已占有资源，又申请新资源</li><li><strong>不剥夺条件</strong>：进程已获得的资源不能被剥夺</li><li><strong>环路等待条件</strong>：存在进程-资源的循环等待链</li></ol>
 
-      <div class="exercise">
-        <div class="exercise-header"><span class="num">1</span> 页面置换过程分析</div>
-        <div class="exercise-body">
-          <h5>题目</h5>
-          <p>分配3个物理块，页面引用串：7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2, 1, 2, 0, 1, 7, 0, 1</p>
-          <p>分别用 OPT、FIFO、LRU 计算缺页次数和缺页率。</p>
-          <div class="answer">
-            <div class="answer-label">解答</div>
-            <table>
-              <tr><th>算法</th><th>缺页次数</th><th>缺页率</th></tr>
-              <tr><td>OPT</td><td><span class="hl">9</span></td><td>45%</td></tr>
-              <tr><td>FIFO</td><td><span class="hl">15</span></td><td>75%</td></tr>
-              <tr><td>LRU</td><td><span class="hl">12</span></td><td>60%</td></tr>
-            </table>
-          </div>
-        </div>
-      </div>
+  <h4>死锁的处理方法</h4>
+  <p><strong>1. 预防死锁</strong>：破坏四个必要条件之一</p>
+  <ul><li>摒弃请求和保持：资源一次性分配（全分配，全释放）→ AND信号量</li><li>摒弃不剥夺：新申请不能满足则释放已获得资源</li><li>摒弃环路：资源的有序分配法（为资源编号）</li></ul>
+  <p><strong>2. 避免死锁</strong>：银行家算法</p>
+  <ul><li><strong>安全状态</strong>：能找到安全序列的状态</li><li><strong>不安全状态</strong>：找不到安全序列的状态</li></ul>
+  <p><strong>3. 检测与解除</strong></p>
 
-      <div class="exercise">
-        <div class="exercise-header"><span class="num">2</span> 二维数组缺页分析</div>
-        <div class="exercise-body">
-          <h5>题目</h5>
-          <p>二维数组 A[1..100, 1..100] 按行优先存储。每页放200个整数，内存块数3（1块程序+2块数据）。分别计算按行访问和按列访问的缺页次数。</p>
-          <div class="answer">
-            <div class="answer-label">解答</div>
-            <p><strong>按行访问</strong>：首次装入200个整数，处理完200个才再次缺页。100×100个整数共 <span class="hl-green">50次缺页</span>。</p>
-            <p><strong>按列访问</strong>：每次只处理2个整数就需换页。100×100个整数共 <span class="hl-red">5000次缺页</span>。</p>
-            <div class="tip">
-              <div class="tip-title">💡 结论</div>
-              存储顺序与访问顺序一致时缺页率大大降低 —— 体现<strong>空间局部性原理</strong>。
-            </div>
-          </div>
-        </div>
-      </div>
+  <h4>资源分配图</h4>
+  <p>用有向图描述进程和资源之间的分配和请求关系。圆圈表示进程，方框表示资源，方框中的圆点表示资源实例。</p>
+  <div class="tip"><div class="tip-title">💡 关键结论</div>如果图中存在环路，且环路中的每类资源只有一个实例，则发生死锁。</div>
 
-      <div class="exercise">
-        <div class="exercise-header"><span class="num">3</span> 缺页率与有效访问时间</div>
-        <div class="exercise-body">
-          <h5>题目</h5>
-          <p>未修改页替换需8ms，修改过需20ms。内存存取1μs。70%被替换页被修改过。保证有效存取时间 ≤ 2μs，求最大缺页率。</p>
-          <div class="answer">
-            <div class="answer-label">解答</div>
-            <div class="formula">(1−p) × 1 + p × (0.7 × 20000 + 0.3 × 8000 + 1) ≤ 2<br>1 + 16399.1p ≤ 2<br>p ≤ <span class="hl">0.00006</span></div>
-          </div>
-        </div>
-      </div>
+  <h3>3.3 课后习题（范围内的 ✅ / 范围外的 ❌）</h3>
+  <table>
+    <tr><th>题号</th><th>题目内容</th><th>范围</th></tr>
+    <tr><td>3-1</td><td>FCFS调度算法：计算完成时间、周转时间、带权周转时间</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>3-2</td><td>SJF调度算法：计算平均周转时间和平均带权周转时间</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>3-3</td><td><strong>高响应比优先算法</strong>：计算响应比、执行顺序</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>3-4</td><td>优先级调度（静态 vs 动态）的概念与特点</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>3-5</td><td><strong>死锁的四个必要条件</strong>（互斥、请求保持、不剥夺、环路）</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>3-6</td><td>死锁预防：如何破坏四个必要条件？</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>3-7</td><td><strong>银行家算法</strong>：判断系统是否安全、资源分配是否合理</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>3-8</td><td>资源分配图：有环是否一定死锁？</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>3-9</td><td>死锁避免 vs 死锁预防 vs 死锁检测的区别</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>3-10</td><td>多道批处理调度（允许移动已在内存中的作业，FCFS/SJF对比）</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>3-11</td><td>死锁解除方法：剥夺资源、进程回退、撤销进程</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>3-12</td><td><strong>资源分配图化简</strong>：判断系统是否死锁</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>3-A</td><td><strong>轮转法 RR（时间片轮转）</strong></td><td><span class="tag tag-no">❌</span></td></tr>
+    <tr><td>3-B</td><td><strong>实时调度算法</strong>（EDF、松弛度）</td><td><span class="tag tag-no">❌</span></td></tr>
+    <tr><td>3-C</td><td><strong>多级反馈队列调度</strong></td><td><span class="tag tag-no">❌</span></td></tr>
+    <tr><td>3-D</td><td><strong>高优先权优先调度的抢占式计算</strong></td><td><span class="tag tag-no">❌</span></td></tr>
+  </table>
+</section>
 
-      <div class="exercise">
-        <div class="exercise-header"><span class="num">4</span> 虚拟地址转物理地址</div>
-        <div class="exercise-body">
-          <h5>题目</h5>
-          <p>用户空间32页，每页1K，主存16K。页0、1、2、3分配的物理块号为5、10、4、7。作业长度6页。将十六进制虚拟地址0A5C、103C、1A5C转换成物理地址。</p>
-          <div class="answer">
-            <div class="answer-label">解答</div>
-            <table>
-              <tr><th>虚拟地址</th><th>页号</th><th>页内地址</th><th>物理块号</th><th>物理地址</th></tr>
-              <tr><td>0A5C</td><td>2</td><td>25C</td><td>4</td><td><span class="hl">125C</span></td></tr>
-              <tr><td>103C</td><td>4</td><td>03C</td><td>未分配</td><td><span class="hl-red">缺页中断</span></td></tr>
-              <tr><td>1A5C</td><td>6</td><td>25C</td><td>超作业长度</td><td><span class="hl-red">越界中断</span></td></tr>
-            </table>
-          </div>
-        </div>
-      </div>
+<!-- CH4 -->
+<section class="section ch4" id="ch4">
+  <h2 class="section-title"><span class="icon">Ch4</span> 第4章 存储器管理（全部在考试范围内 ✅）</h2>
 
-      <div class="exercise">
-        <div class="exercise-header"><span class="num">5</span> 段表访问分析</div>
-        <div class="exercise-body">
-          <h5>题目</h5>
-          <p>存在位为1表示段在内存。分析各指令执行结果。</p>
-          <table>
-            <tr><th>段号</th><th>存在位</th><th>内存始址</th><th>段长</th><th>存取控制</th></tr>
-            <tr><td>0</td><td>0</td><td>500</td><td>100</td><td>W</td></tr>
-            <tr><td>1</td><td>1</td><td>1000</td><td>30</td><td>R</td></tr>
-            <tr><td>2</td><td>1</td><td>3000</td><td>200</td><td>E</td></tr>
-            <tr><td>3</td><td>1</td><td>8000</td><td>80</td><td>R</td></tr>
-            <tr><td>4</td><td>0</td><td>5000</td><td>40</td><td>R</td></tr>
-          </table>
-          <div class="answer">
-            <div class="answer-label">解答</div>
-            <table>
-              <tr><th>指令</th><th>结果</th></tr>
-              <tr><td>STORE R1,[0,70]</td><td><span class="hl-red">缺段中断</span></td></tr>
-              <tr><td>STORE R1,[1,20]</td><td><span class="hl-red">存取控制保护中断</span>（只读）</td></tr>
-              <tr><td>LOAD R1,[3,20]</td><td><span class="hl-green">正常执行</span></td></tr>
-              <tr><td>LOAD R1,[3,100]</td><td><span class="hl-red">越界中断</span>（100 > 80）</td></tr>
-              <tr><td>JMP [2,100]</td><td><span class="hl-green">正常执行</span></td></tr>
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
+  <h3>4.1 程序的装入和链接</h3>
+  <h4>1. 绝对装入</h4>
+  <p>编译后，装入前已产生了绝对地址（内存地址），装入时不再作地址重定位。只适合单道程序环境。</p>
 
-    <!-- ========== CH6 ========== -->
-    <section class="section ch6" id="ch6">
-      <h2 class="section-title"><span class="icon">Ch6</span> 第6章 输入输出系统</h2>
+  <h4>2. 可重定位装入（静态重定位）</h4>
+  <p>地址转换在<strong>装入时一次完成</strong>，由软件实现（重定位装入程序完成）。<strong>缺点</strong>：不允许程序运行时在内存中移动位置。</p>
 
-      <div class="exclude-box">
-        <div class="exclude-box-title">🚫 排除不考</div>
-        缓冲管理（单缓冲、双缓冲、循环缓冲、缓冲池）
-      </div>
+  <h4>3. 动态运行时装入（动态重定位）⭐重点</h4>
+  <p>相对地址向绝对地址的转换在<strong>运行时</strong>完成。需要硬件地址变换机构：<strong>重定位寄存器</strong>的支持。</p>
+  <ul><li><strong>优点</strong>：进程可以移动，支持紧凑</li><li>物理地址 = 逻辑地址 + 重定位寄存器值</li></ul>
+  <div class="tip"><div class="tip-title">💡 关键结论</div><strong>紧凑必须配合动态重定位才能实现。</strong>因为紧凑把进程搬家后，只有动态重定位能在运行时把逻辑地址正确转换成新的物理地址。</div>
 
-      <h3>6.1 I/O 控制基本方式（4种）—— 重点概念</h3>
+  <h3>4.2 连续分配方式</h3>
+  <h4>1. 单一连续分配</h4>
+  <p>内存分为系统区 + 用户区。应用程序装入用户区，可使用用户区全部空间。最简单，适用于单用户、单任务的OS。缺点：对要求内存空间少的程序，造成内存浪费。</p>
 
-      <table>
-        <tr><th>方式</th><th>CPU干预程度</th><th>传输单位</th><th>适用场景</th></tr>
-        <tr><td><strong>程序I/O</strong>（轮询/查询）</td><td>完全干预</td><td>字/字节</td><td>简单低速</td></tr>
-        <tr><td><strong>中断驱动</strong></td><td>每字中断</td><td>字/字节</td><td>中低速</td></tr>
-        <tr><td><strong>DMA</strong>（直接存储器访问）</td><td>开始/结束</td><td>数据块</td><td>高速</td></tr>
-        <tr><td><strong>I/O通道</strong></td><td>发命令即可</td><td>一组块</td><td>大量数据</td></tr>
-      </table>
+  <h4>2. 固定分区分配</h4>
+  <p>将内存划分成若干个连续区域（分区），每个分区只能存储一个程序。分区大小相等或不相等（不相等利用率更高）。<strong>优点</strong>：简单；<strong>缺点</strong>：有<strong>内碎片</strong>（分区内剩余空间）。</p>
 
-      <h4>1. 程序I/O方式（轮询/查询方式）</h4>
-      <p>CPU不断查询设备状态，直到设备就绪。<strong>CPU完全干预I/O</strong>，效率极低。适用于简单、低速设备。</p>
+  <h4>3. 可变分区分配（动态分区）⭐重点</h4>
+  <p>内存不预先划分好，当作业装入时，根据作业需求动态分配。数据结构：空闲分区表、空闲分区链。</p>
+  <table>
+    <tr><th>算法</th><th>策略</th><th>特点</th></tr>
+    <tr><td><strong>首次适应</strong></td><td>从低地址开始，找第一个够大的</td><td>低地址使用频繁，碎片多</td></tr>
+    <tr><td><strong>循环首次适应</strong></td><td>从上次找到的位置继续找</td><td>分配均匀，缺乏大空闲分区</td></tr>
+    <tr><td><strong>最佳适应</strong></td><td>找最小的满足需求的分区</td><td>减少浪费，但产生很多小碎片</td></tr>
+    <tr><td><strong>最坏适应</strong></td><td>找最大的分区</td><td>减少小碎片，但大作业难满足</td></tr>
+  </table>
 
-      <h4>2. 中断驱动方式</h4>
-      <p>设备就绪后向CPU发中断信号，CPU响应后处理。CPU无需轮询，可以做其他事。每传一个数据就要中断一次，适合<strong>中低速</strong>设备。</p>
+  <h4>4. 可重定位分区分配（紧凑）⭐重点</h4>
+  <p><strong>问题</strong>：连续分配产生大量<strong>外部碎片</strong>（分散的小空闲区），总量够但连续空间不够。</p>
+  <p><strong>紧凑</strong>：将内存中的进程移动，使它们相邻，空出大块连续空间。</p>
+  <p><strong>条件</strong>：必须采用<strong>动态重定位</strong>，因为进程搬家后物理地址变了。</p>
 
-      <h4>3. DMA方式（直接存储器访问）</h4>
-      <p>在<strong>DMA控制器</strong>的控制下，数据直接在设备和内存之间传输。<strong>无需CPU干预</strong>，只在开始和结束时需要CPU。适合<strong>高速</strong>设备（磁盘等）。以<strong>数据块</strong>为单位传输。</p>
+  <h3>4.3 基本分页存储管理方式</h3>
+  <h4>逻辑地址 → 物理地址</h4>
+  <p><strong>基本分页</strong>：</p>
+  <ul><li>逻辑地址 A，页面大小 L</li><li>页号 P = INT[A / L]</li><li>页内偏移 d = A MOD L</li><li>物理地址 = 页表[P] × L + d</li></ul>
+  <div class="tip"><div class="tip-title">💡 位运算技巧</div>当页面尺寸为2的幂时，可以直接用位运算拆分页号和页内地址，无需除法。<br>例：页大小1KB = 2<sup>10</sup>，逻辑地址4101 = 二进制 000100 0000000101<br>→ 页号 = 000100 = <span class="hl">4</span>，页内地址 = 0000000101 = <span class="hl">5</span></div>
 
-      <h4>4. I/O通道方式</h4>
-      <p>使用专门的<strong>I/O处理器（通道）</strong>执行通道程序。通道可以独立执行I/O操作，CPU只需发命令。进一步减轻CPU负担，适合<strong>大量数据</strong>传输。</p>
+  <h4>快表 TLB</h4>
+  <p>高速缓存，存放最近访问的页表项。若命中则无需访问内存中的页表，加快地址变换速度。</p>
 
-      <h3>6.3 SPOOLing 技术</h3>
-      <p><strong>假脱机技术</strong>：将独占设备改造成共享设备。利用磁盘作为缓冲，多个用户可以同时请求使用打印机（实际是排队）。</p>
+  <h4>两级页表</h4>
+  <p>将页表再分页，解决页表过长的问题。外层页表 → 内层页表 → 物理块。</p>
 
-      <h3>6.4 设备独立性</h3>
-      <p>用户程序使用<strong>逻辑设备名</strong>，与物理设备无关。操作系统负责逻辑设备到物理设备的映射。</p>
-    </section>
+  <h3>4.4 基本分段存储管理方式</h3>
+  <p>段是<strong>逻辑单位</strong>（按程序的逻辑结构划分），页是<strong>物理单位</strong>。段长不固定，由用户指定。</p>
+  <p>段表：段号 | 段长 | 基址 | 存取控制</p>
+  <p>地址变换：段号查段表 → 段内地址与段长比较（越界检查）→ 物理地址 = 基址 + 段内地址</p>
 
-    <!-- ========== CH7 ========== -->
-    <section class="section ch7" id="ch7">
-      <h2 class="section-title"><span class="icon">Ch7</span> 第7章 文件管理</h2>
+  <h3>4.5 课后习题（Ch4 全部在考试范围内 ✅）</h3>
+  <table>
+    <tr><th>题号</th><th>题目内容</th><th>类型</th></tr>
+    <tr><td>4-1</td><td><strong>逻辑地址格式</strong>：已知逻辑空间32页，每页2K，物理空间1M，写地址格式</td><td>计算</td></tr>
+    <tr><td>4-2</td><td><strong>页表项计算</strong>：页表有多少项？每项至少多少位？物理空间减半怎么变？</td><td>计算</td></tr>
+    <tr><td>4-3</td><td><strong>逻辑地址→物理地址</strong>：64K主存，1K页大小，4页作业分配到2/4/6/7块</td><td>计算</td></tr>
+    <tr><td>4-4</td><td><strong>地址变换过程图</strong>：以1023为例画出地址变换过程</td><td>概念</td></tr>
+    <tr><td>4-5</td><td><strong>TLB有效访问时间</strong>：无快表 vs 快表命中率85%</td><td>计算</td></tr>
+    <tr><td>4-6</td><td><strong>内存分配算法</strong>：循环适应 vs 最佳适应（12K/10K/9K请求）</td><td>计算</td></tr>
+    <tr><td>4-7</td><td><strong>段式地址变换</strong>：段表基址+段长，判断越界中断</td><td>计算</td></tr>
+    <tr><td>4-8</td><td>分页 vs 分段的主要区别（页是物理单位，段是逻辑单位）</td><td>概念</td></tr>
+    <tr><td>4-9</td><td>段页式存储管理的基本思想</td><td>概念</td></tr>
+    <tr><td>4-10</td><td><strong>紧凑</strong>的概念：为什么要紧凑？何时触发？</td><td>概念</td></tr>
+    <tr><td>4-11</td><td><strong>动态重定位</strong> vs 静态重定位：区别、能否移动、是否支持紧凑</td><td>概念</td></tr>
+    <tr><td>4-12</td><td>固定分区 vs 可变分区的区别</td><td>概念</td></tr>
+    <tr><td>4-13</td><td>首次适应 vs 循环首次适应 vs 最佳适应 vs 最坏适应</td><td>概念</td></tr>
+    <tr><td>4-14</td><td>内存回收时的四种情况（上邻、下邻、上下邻、不邻接）</td><td>概念</td></tr>
+    <tr><td>4-15</td><td>对换（Swapping）的概念：换入/换出</td><td>概念</td></tr>
+  </table>
+</section>
 
-      <h3>7.1 文件目录</h3>
-      <ul style="margin: 8px 0 12px 20px; color: var(--text-secondary);">
-        <li><strong>单级目录</strong>：简单但文件名不能重复</li>
-        <li><strong>两级目录</strong>：主文件目录 + 用户文件目录</li>
-        <li><strong>多级目录（树形目录）</strong>：现代OS普遍采用</li>
-      </ul>
+<!-- CH5 -->
+<section class="section ch5" id="ch5">
+  <h2 class="section-title"><span class="icon">Ch5</span> 第5章 虚拟存储器</h2>
 
-      <h3>7.2 文件逻辑结构</h3>
-      <h4>1. 顺序文件</h4>
-      <ul style="margin: 8px 0 12px 20px; color: var(--text-secondary);">
-        <li><strong>串结构</strong>：按存入时间先后排序</li>
-        <li><strong>顺序结构</strong>：按用户指定的关键字排序</li>
-        <li><strong>优点</strong>：批量存取效率高，只有顺序文件能存储在磁带上</li>
-        <li><strong>缺点</strong>：插入删除困难，交互应用性能差</li>
-      </ul>
+  <div class="exclude-box"><div class="exclude-box-title">🚫 排除不考</div>Clock置换算法（简单Clock和改进型Clock）、抖动（Thrashing）、工作集模型</div>
 
-      <h4>2. 索引文件</h4>
-      <ul style="margin: 8px 0 12px 20px; color: var(--text-secondary);">
-        <li>为变长记录文件建立索引表</li>
-        <li>索引表按关键字排序，是定长记录的顺序文件</li>
-        <li><strong>优点</strong>：查找速度快，插入删除方便</li>
-        <li><strong>缺点</strong>：增加存储开销</li>
-      </ul>
+  <h3>5.1 页面置换算法（计算题 · 10分）</h3>
+  <p><strong>考试范围</strong>：FIFO、OPT、LRU、缺页率</p>
 
-      <h3>7.3 索引节点（inode）</h3>
-      <p>在UNIX中，文件目录项只包含文件名和指向inode的指针。</p>
-      <p><strong>inode</strong> 存放文件的元数据：文件类型、大小、权限、时间戳、盘块地址等。</p>
-      <p>文件共享可以通过共享inode实现（硬链接）。</p>
-    </section>
+  <h4>1. 最佳置换算法 OPT</h4>
+  <p>选择<strong>以后永不使用</strong>或<strong>在最长时间内不再被访问</strong>的页面淘汰。理论最优，但无法实现（需要预知未来），用于比较评价。</p>
 
-    <!-- ========== CH8 ========== -->
-    <section class="section ch8" id="ch8">
-      <h2 class="section-title"><span class="icon">Ch8</span> 第8章 磁盘存储器的管理</h2>
+  <h4>2. 先进先出 FIFO</h4>
+  <p>选择<strong>最早进入内存</strong>的页面淘汰。可能出现 <span class="hl-red">Belady异常</span>：物理块增加，缺页率反而增加。</p>
 
-      <div class="exclude-box">
-        <div class="exclude-box-title">⚠️ 注意范围</div>
-        考试范围到 <strong>8.1 FAT文件分配表</strong> 为止，8.1之后的内容不考。
-      </div>
+  <h4>3. 最近最久未使用 LRU</h4>
+  <p>选择<strong>最近一段时间最久未被访问</strong>的页面淘汰。实现方式：移位寄存器或栈。性能接近OPT，是实际常用的算法。</p>
 
-      <h3>8.1 FAT 文件分配表</h3>
+  <h4>缺页率计算</h4>
+  <div class="formula"><span class="hl">缺页率</span> = 缺页次数 / 总访问次数</div>
 
-      <h4>FAT12</h4>
-      <ul style="margin: 8px 0 12px 20px; color: var(--text-secondary);">
-        <li>每个FAT表项12位，最多2<sup>12</sup>个表项</li>
-        <li>以盘块为基本分配单位时，最大分区容量 = 2<sup>12</sup> × 512B = <strong>2MB</strong></li>
-        <li>整个磁盘最大容量 = 4 × 2MB = <strong>8MB</strong></li>
-      </ul>
+  <h4>有效访问时间</h4>
+  <div class="formula">有效访问时间 = (1−p) × t + p × f<br><span style="color:var(--text-muted)">p=缺页率, t=内存访问时间, f=缺页中断时间</span></div>
 
-      <h4>FAT16</h4>
-      <ul style="margin: 8px 0 12px 20px; color: var(--text-secondary);">
-        <li>每个FAT表项16位，最多65536个簇</li>
-        <li>可管理最大分区空间 = 2<sup>16</sup> × 64 × 512 = <strong>2GB</strong></li>
-        <li>簇内碎片大，浪费10%~20%空间</li>
-      </ul>
+  <h4>请求分页的基本概念</h4>
+  <ul>
+    <li><strong>局部性原理</strong>：时间局部性（循环）+ 空间局部性（顺序）</li>
+    <li>虚拟存储器特征：<strong>离散性、多次性、对换性、虚拟性</strong></li>
+    <li><strong>页表项</strong>：页号 | 物理块号 | 状态位P | 访问字段A | 修改位M | 外存地址</li>
+  </ul>
 
-      <h4>FAT32</h4>
-      <ul style="margin: 8px 0 12px 20px; color: var(--text-secondary);">
-        <li>每个FAT表项占4字节（实际用28位）</li>
-        <li>簇大小4KB时，单个最大磁盘空间 = 4KB × 2<sup>28</sup> = <strong>1TB</strong></li>
-        <li>可用较小簇，减少簇内碎片</li>
-      </ul>
+  <h3>5.2 课后习题（范围内的 ✅ / 范围外的 ❌）</h3>
+  <table>
+    <tr><th>题号</th><th>题目内容</th><th>范围</th></tr>
+    <tr><td>5-1</td><td><strong>页面置换过程</strong>：3个物理块，引用串7,0,1,2... 用OPT/FIFO/LRU分别计算缺页次数</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>5-2</td><td><strong>二维数组缺页分析</strong>：100×100数组，每页200整数，按行访问 vs 按列访问缺页次数</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>5-3</td><td><strong>缺页率与有效访问时间</strong>：修改页20ms，未修改8ms，70%被修改，求最大缺页率</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>5-4</td><td><strong>虚拟地址转物理地址</strong>：32页×1K，物理16K，页0/1/2/3→5/10/4/7，0A5C/103C/1A5C</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>5-5</td><td><strong>段表访问分析</strong>：存在位、存取控制（R/W/E）、段长检查，判断中断类型</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>5-6</td><td>请求分页的基本原理：局部性原理、页表项字段（P/A/M）</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>5-7</td><td>缺页中断处理过程（6步）</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>5-8</td><td>虚拟存储器的特征（离散性、多次性、对换性、虚拟性）</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>5-9</td><td>页面大小的选择对系统的影响</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>5-10</td><td>页表中中断位、访问位、修改位、辅存地址的含义</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>5-11</td><td>地址变换：给定页表，逻辑地址1800和3600的转换过程</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>5-A</td><td><strong>Clock置换算法</strong>（简单Clock、改进型Clock）</td><td><span class="tag tag-no">❌</span></td></tr>
+    <tr><td>5-B</td><td>抖动（Thrashing）的概念与预防</td><td><span class="tag tag-no">❌</span></td></tr>
+    <tr><td>5-C</td><td>工作集模型</td><td><span class="tag tag-no">❌</span></td></tr>
+    <tr><td>5-D</td><td>CPU利用率与多道程序度的关系（判断抖动）</td><td><span class="tag tag-no">❌</span></td></tr>
+  </table>
+</section>
 
-      <div class="tip">
-        <div class="tip-title">📌 总结</div>
-        FAT12 → FAT16 → FAT32：表项位数增大，可管理磁盘容量增大。但FAT表存储开销也随之增大。
-      </div>
+<!-- CH6 -->
+<section class="section ch6" id="ch6">
+  <h2 class="section-title"><span class="icon">Ch6</span> 第6章 输入输出系统</h2>
 
-      <h3>8.2 混合索引（UNIX inode）</h3>
-      <p>UNIX System V 的inode中设<strong>13个地址项</strong>：</p>
-      <ul style="margin: 8px 0 12px 20px; color: var(--text-secondary);">
-        <li><strong>直接地址</strong>：i.addr(0) ~ i.addr(9)，共10个，直接指向数据块</li>
-        <li><strong>一次间接</strong>：i.addr(10)，指向一个索引块，该索引块存放数据块地址</li>
-        <li><strong>二次间接</strong>：i.addr(11)，指向一个索引块，该索引块指向多个索引块</li>
-        <li><strong>三次间接</strong>：i.addr(12)，三级索引</li>
-      </ul>
+  <div class="exclude-box"><div class="exclude-box-title">🚫 排除不考</div>缓冲管理（单缓冲、双缓冲、循环缓冲、缓冲池）、磁盘调度算法（FCFS/SSTF/SCAN/C-SCAN等）、磁盘性能参数（寻道时间、旋转延迟、传输时间）、RAID技术（RAID 0/1/3/5/6/7）</div>
 
-      <h4>最大文件大小计算</h4>
-      <p>设盘块大小为4KB，每个地址占4字节：</p>
-      <ul style="margin: 8px 0 12px 20px; color: var(--text-secondary);">
-        <li>一个索引块可存 4KB/4B = <strong>1024</strong> 个地址</li>
-        <li>直接：10 × 4KB = <strong>40KB</strong></li>
-        <li>一次间接：1024 × 4KB = <strong>4MB</strong></li>
-        <li>二次间接：1024 × 1024 × 4KB = <strong>4GB</strong></li>
-        <li>三次间接：1024<sup>3</sup> × 4KB = <strong>4TB</strong></li>
-      </ul>
+  <h3>6.1 I/O 控制基本方式（4种）—— 重点概念</h3>
+  <table>
+    <tr><th>方式</th><th>CPU干预程度</th><th>传输单位</th><th>适用场景</th></tr>
+    <tr><td><strong>程序I/O</strong>（轮询/查询）</td><td>完全干预</td><td>字/字节</td><td>简单低速</td></tr>
+    <tr><td><strong>中断驱动</strong></td><td>每字中断</td><td>字/字节</td><td>中低速</td></tr>
+    <tr><td><strong>DMA</strong>（直接存储器访问）</td><td>开始/结束</td><td>数据块</td><td>高速</td></tr>
+    <tr><td><strong>I/O通道</strong></td><td>发命令即可</td><td>一组块</td><td>大量数据</td></tr>
+  </table>
 
-      <h3>8.3 文件物理结构比较</h3>
-      <table>
-        <tr><th>分配方式</th><th>优点</th><th>缺点</th></tr>
-        <tr><td>连续分配</td><td>速度快，支持随机访问</td><td>产生碎片，不利于增长</td></tr>
-        <tr><td>链接分配</td><td>无碎片，利于增长</td><td>随机访问慢，指针占用空间</td></tr>
-        <tr><td>索引分配</td><td>支持随机访问，无碎片</td><td>索引块开销，访问需读索引</td></tr>
-      </table>
-    </section>
+  <h4>1. 程序I/O方式（轮询/查询方式）</h4>
+  <p>CPU不断查询设备状态，直到设备就绪。<strong>CPU完全干预I/O</strong>，效率极低。适用于简单、低速设备。</p>
 
-    <!-- ========== EXCLUDE SUMMARY ========== -->
-    <section class="section exclude-section" id="exclude">
-      <h2 class="section-title">
-        <span class="icon">❌</span> 排除不考内容汇总
-      </h2>
-      <table>
-        <tr><th>章节</th><th>排除内容</th></tr>
-        <tr><td>第1章</td><td><span class="hl-red">全部不考</span></td></tr>
-        <tr><td>第3章</td><td>轮转法（RR）、实时调度（EDF、松弛度）、多级反馈队列</td></tr>
-        <tr><td>第5章</td><td>Clock置换算法（简单Clock和改进型Clock）</td></tr>
-        <tr><td>第6章</td><td>缓冲管理（单缓冲、双缓冲、循环缓冲、缓冲池）</td></tr>
-        <tr><td>第8章</td><td>8.1之后的内容（若范围只到8.1）</td></tr>
-      </table>
-    </section>
+  <h4>2. 中断驱动方式</h4>
+  <p>设备就绪后向CPU发中断信号，CPU响应后处理。CPU无需轮询，可以做其他事。每传一个数据就要中断一次，适合<strong>中低速</strong>设备。</p>
 
-    <!-- ========== FORMULA SHEET ========== -->
-    <section class="section" id="formula">
-      <h2 class="section-title"><span class="icon">📋</span> 公式速查表</h2>
-      <table>
-        <tr><th>公式</th><th>说明</th></tr>
-        <tr><td><code>响应比 = (等待时间 + 服务时间) / 服务时间</code></td><td>高响应比优先算法</td></tr>
-        <tr><td><code>页号 P = INT[A / L]</code></td><td>A为逻辑地址，L为页大小</td></tr>
-        <tr><td><code>页内偏移 d = A MOD L</code></td><td></td></tr>
-        <tr><td>物理地址 = 物理块号 × 页大小 + 页内偏移</td><td>基本分页地址变换</td></tr>
-        <tr><td>缺页率 = 缺页次数 / 总访问次数</td><td></td></tr>
-        <tr><td>有效访问时间 = (1−p) × t + p × f</td><td>p=缺页率, t=内存访问时间, f=缺页中断时间</td></tr>
-      </table>
+  <h4>3. DMA方式（直接存储器访问）</h4>
+  <p>在<strong>DMA控制器</strong>的控制下，数据直接在设备和内存之间传输。<strong>无需CPU干预</strong>，只在开始和结束时需要CPU。适合<strong>高速</strong>设备（磁盘等）。以<strong>数据块</strong>为单位传输。</p>
 
-      <h3 style="margin-top: 24px;">复习建议</h3>
-      <ol style="margin: 8px 0 12px 20px; color: var(--text-secondary);">
-        <li><strong>概念题重点</strong>：进程定义/状态/PCB、死锁四条件、4种I/O控制方式、文件逻辑结构</li>
-        <li><strong>计算题重点</strong>：PV操作（水果盘）、调度算法（FCFS/SJF/高响应比）、地址变换、页面置换（FIFO/OPT/LRU）、缺页率</li>
-        <li><strong>公式背牢</strong>：响应比、页号/偏移计算、缺页率、有效访问时间</li>
-        <li><strong>FAT和混合索引</strong>：注意大小计算、优缺点对比</li>
-      </ol>
-    </section>
+  <h4>4. I/O通道方式</h4>
+  <p>使用专门的<strong>I/O处理器（通道）</strong>执行通道程序。通道可以独立执行I/O操作，CPU只需发命令。进一步减轻CPU负担，适合<strong>大量数据</strong>传输。</p>
 
-  </main>
+  <h3>6.3 SPOOLing 技术</h3>
+  <p><strong>假脱机技术</strong>：将独占设备改造成共享设备。利用磁盘作为缓冲，多个用户可以同时请求使用打印机（实际是排队）。</p>
 
-  <script>
-    const sections = document.querySelectorAll('.section');
-    const navItems = document.querySelectorAll('.nav-item');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const id = entry.target.getAttribute('id');
-          navItems.forEach(item => {
-            item.classList.toggle('active', item.getAttribute('href') === '#' + id);
-          });
-        }
+  <h3>6.4 设备独立性</h3>
+  <p>用户程序使用<strong>逻辑设备名</strong>，与物理设备无关。操作系统负责逻辑设备到物理设备的映射。</p>
+
+  <h3>6.5 课后习题（范围内的 ✅ / 范围外的 ❌）</h3>
+  <table>
+    <tr><th>题号</th><th>题目内容</th><th>范围</th></tr>
+    <tr><td>6-1</td><td><strong>四种I/O控制方式对比</strong>（程序I/O、中断、DMA、I/O通道）</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>6-2</td><td>DMA方式的特点：为什么比中断方式快？以什么为单位传输？</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>6-3</td><td>I/O通道方式与DMA方式的区别</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>6-4</td><td><strong>SPOOLing技术</strong>：假脱机的概念，如何将独占设备变共享？</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>6-5</td><td>设备独立性的概念：逻辑设备名 vs 物理设备名</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>6-6</td><td>设备分配中的数据结构（DCT、COCT、CHCT、SDT）</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>6-A</td><td><strong>缓冲管理</strong>（单缓冲、双缓冲、循环缓冲、缓冲池）</td><td><span class="tag tag-no">❌</span></td></tr>
+    <tr><td>6-B</td><td><strong>磁盘调度算法</strong>（FCFS/SSTF/SCAN/C-SCAN等）</td><td><span class="tag tag-no">❌</span></td></tr>
+    <tr><td>6-C</td><td><strong>磁盘性能参数</strong>（寻道时间、旋转延迟、传输时间）</td><td><span class="tag tag-no">❌</span></td></tr>
+    <tr><td>6-D</td><td><strong>RAID技术</strong>（RAID 0/1/3/5/6/7）</td><td><span class="tag tag-no">❌</span></td></tr>
+  </table>
+</section>
+
+<!-- CH7 -->
+<section class="section ch7" id="ch7">
+  <h2 class="section-title"><span class="icon">Ch7</span> 第7章 文件管理（全部在考试范围内 ✅）</h2>
+
+  <h3>7.1 文件目录</h3>
+  <ul>
+    <li><strong>单级目录</strong>：简单但文件名不能重复</li>
+    <li><strong>两级目录</strong>：主文件目录 + 用户文件目录</li>
+    <li><strong>多级目录（树形目录）</strong>：现代OS普遍采用</li>
+  </ul>
+
+  <h3>7.2 文件逻辑结构</h3>
+  <h4>1. 顺序文件</h4>
+  <ul>
+    <li><strong>串结构</strong>：按存入时间先后排序</li>
+    <li><strong>顺序结构</strong>：按用户指定的关键字排序</li>
+    <li><strong>优点</strong>：批量存取效率高，只有顺序文件能存储在磁带上</li>
+    <li><strong>缺点</strong>：插入删除困难，交互应用性能差</li>
+  </ul>
+
+  <h4>2. 索引文件</h4>
+  <ul>
+    <li>为变长记录文件建立索引表</li>
+    <li>索引表按关键字排序，是定长记录的顺序文件</li>
+    <li><strong>优点</strong>：查找速度快，插入删除方便</li>
+    <li><strong>缺点</strong>：增加存储开销</li>
+  </ul>
+
+  <h3>7.3 索引节点（inode）</h3>
+  <p>在UNIX中，文件目录项只包含文件名和指向inode的指针。</p>
+  <p><strong>inode</strong> 存放文件的元数据：文件类型、大小、权限、时间戳、盘块地址等。</p>
+  <p>文件共享可以通过共享inode实现（硬链接）。</p>
+
+  <h3>7.4 文件共享与保护</h3>
+  <ul>
+    <li>基于索引节点的共享：硬链接（count计数）</li>
+    <li>基于符号链的共享：软链接（符号链接）</li>
+    <li>访问控制矩阵/访问控制列表ACL</li>
+    <li>文件保护：口令保护、加密保护、访问控制</li>
+  </ul>
+
+  <h3>7.5 课后习题（Ch7 全部在考试范围内 ✅）</h3>
+  <table>
+    <tr><th>题号</th><th>题目内容</th><th>类型</th></tr>
+    <tr><td>7-1</td><td>文件目录结构：单级/两级/树形目录的特点</td><td>概念</td></tr>
+    <tr><td>7-2</td><td>顺序文件（串结构 vs 顺序结构）的优缺点</td><td>概念</td></tr>
+    <tr><td>7-3</td><td>索引文件的特点：适合什么场景？为什么增加存储开销？</td><td>概念</td></tr>
+    <tr><td>7-4</td><td><strong>索引节点inode</strong>：UNIX中目录项和inode分别存放什么？</td><td>概念</td></tr>
+    <tr><td>7-5</td><td>文件共享方式：硬链接 vs 软链接（符号链接）</td><td>概念</td></tr>
+    <tr><td>7-6</td><td>访问控制矩阵/访问控制列表ACL的概念</td><td>概念</td></tr>
+    <tr><td>7-7</td><td>文件保护：口令保护、加密保护、访问控制</td><td>概念</td></tr>
+    <tr><td>7-8</td><td>基于索引节点的共享（count计数）的分配与回收</td><td>概念</td></tr>
+    <tr><td>7-9</td><td>环保护机构：访问规则（低环访问高环数据？高环调用低环服务？）</td><td>概念</td></tr>
+  </table>
+</section>
+
+<!-- CH8 -->
+<section class="section ch8" id="ch8">
+  <h2 class="section-title"><span class="icon">Ch8</span> 第8章 磁盘存储器的管理</h2>
+
+  <div class="exclude-box"><div class="exclude-box-title">⚠️ 注意范围</div>考试范围到 <strong>8.1 FAT文件分配表</strong> 为止，8.1之后的内容不考。</div>
+
+  <h3>8.1 FAT 文件分配表</h3>
+
+  <h4>FAT12</h4>
+  <ul>
+    <li>每个FAT表项12位，最多2<sup>12</sup>个表项</li>
+    <li>以盘块为基本分配单位时，最大分区容量 = 2<sup>12</sup> × 512B = <strong>2MB</strong></li>
+    <li>整个磁盘最大容量 = 4 × 2MB = <strong>8MB</strong></li>
+  </ul>
+
+  <h4>FAT16</h4>
+  <ul>
+    <li>每个FAT表项16位，最多65536个簇</li>
+    <li>可管理最大分区空间 = 2<sup>16</sup> × 64 × 512 = <strong>2GB</strong></li>
+    <li>簇内碎片大，浪费10%~20%空间</li>
+  </ul>
+
+  <h4>FAT32</h4>
+  <ul>
+    <li>每个FAT表项占4字节（实际用28位）</li>
+    <li>簇大小4KB时，单个最大磁盘空间 = 4KB × 2<sup>28</sup> = <strong>1TB</strong></li>
+    <li>可用较小簇，减少簇内碎片</li>
+  </ul>
+
+  <div class="tip"><div class="tip-title">📌 总结</div>FAT12 → FAT16 → FAT32：表项位数增大，可管理磁盘容量增大。但FAT表存储开销也随之增大。</div>
+
+  <h3>8.2 混合索引（UNIX inode）</h3>
+  <p>UNIX System V 的inode中设<strong>13个地址项</strong>：</p>
+  <ul>
+    <li><strong>直接地址</strong>：i.addr(0) ~ i.addr(9)，共10个，直接指向数据块</li>
+    <li><strong>一次间接</strong>：i.addr(10)，指向一个索引块，该索引块存放数据块地址</li>
+    <li><strong>二次间接</strong>：i.addr(11)，指向一个索引块，该索引块指向多个索引块</li>
+    <li><strong>三次间接</strong>：i.addr(12)，三级索引</li>
+  </ul>
+
+  <h4>最大文件大小计算</h4>
+  <p>设盘块大小为4KB，每个地址占4字节：</p>
+  <ul>
+    <li>一个索引块可存 4KB/4B = <strong>1024</strong> 个地址</li>
+    <li>直接：10 × 4KB = <strong>40KB</strong></li>
+    <li>一次间接：1024 × 4KB = <strong>4MB</strong></li>
+    <li>二次间接：1024 × 1024 × 4KB = <strong>4GB</strong></li>
+    <li>三次间接：1024<sup>3</sup> × 4KB = <strong>4TB</strong></li>
+  </ul>
+
+  <h3>8.3 文件物理结构比较</h3>
+  <table>
+    <tr><th>分配方式</th><th>优点</th><th>缺点</th></tr>
+    <tr><td>连续分配</td><td>速度快，支持随机访问</td><td>产生碎片，不利于增长</td></tr>
+    <tr><td>链接分配</td><td>无碎片，利于增长</td><td>随机访问慢，指针占用空间</td></tr>
+    <tr><td>索引分配</td><td>支持随机访问，无碎片</td><td>索引块开销，访问需读索引</td></tr>
+  </table>
+
+  <h3>8.4 课后习题（范围内的 ✅ / 范围外的 ❌）</h3>
+  <table>
+    <tr><th>题号</th><th>题目内容</th><th>范围</th></tr>
+    <tr><td>8-1</td><td><strong>FAT12</strong>：表项12位，最大分区容量、最大磁盘容量计算</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>8-2</td><td><strong>FAT16</strong>：表项16位，簇的概念，最大分区2GB，簇内碎片问题</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>8-3</td><td><strong>FAT32</strong>：表项4字节（实际28位），单个最大磁盘1TB</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>8-4</td><td>FAT的优缺点：容量增大但存储开销增大</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>8-5</td><td><strong>混合索引</strong>：直接地址、一次间接、二次间接、三次间接</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>8-6</td><td>混合索引最大文件大小计算（盘块4KB，地址4字节）</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>8-7</td><td>文件物理结构比较：连续分配/链接分配/索引分配的优缺点</td><td><span class="tag tag-ok">✅</span></td></tr>
+    <tr><td>8-A</td><td><strong>磁盘冗余阵列RAID</strong></td><td><span class="tag tag-no">❌</span></td></tr>
+    <tr><td>8-B</td><td><strong>RAID的分级</strong>（RAID 0~7）</td><td><span class="tag tag-no">❌</span></td></tr>
+    <tr><td>8-C</td><td><strong>数据一致性控制、事务、检查点、恢复算法</strong></td><td><span class="tag tag-no">❌</span></td></tr>
+    <tr><td>8-D</td><td><strong>磁盘镜像/磁盘双工</strong></td><td><span class="tag tag-no">❌</span></td></tr>
+    <tr><td>8-E</td><td><strong>并行交叉存取</strong></td><td><span class="tag tag-no">❌</span></td></tr>
+  </table>
+</section>
+
+<!-- EXCLUDE SUMMARY -->
+<section class="section exclude-section" id="exclude">
+  <h2 class="section-title"><span class="icon">❌</span> 排除不考内容汇总（速查表）</h2>
+  <table>
+    <tr><th>章节</th><th>排除内容</th><th>标记</th></tr>
+    <tr><td>第1章</td><td><strong>全部不考</strong></td><td><span class="tag tag-no">❌</span></td></tr>
+    <tr><td>第3章</td><td>轮转法RR、实时调度（EDF/松弛度）、多级反馈队列</td><td><span class="tag tag-no">❌</span></td></tr>
+    <tr><td>第5章</td><td>Clock置换算法（简单Clock和改进型Clock）、抖动、工作集</td><td><span class="tag tag-no">❌</span></td></tr>
+    <tr><td>第6章</td><td>缓冲管理（单/双/循环/缓冲池）、磁盘调度、磁盘性能、RAID</td><td><span class="tag tag-no">❌</span></td></tr>
+    <tr><td>第8章</td><td>8.1之后：RAID、数据一致性、事务、检查点、磁盘镜像、并行交叉存取</td><td><span class="tag tag-no">❌</span></td></tr>
+  </table>
+</section>
+
+<!-- FORMULA -->
+<section class="section" id="formula">
+  <h2 class="section-title"><span class="icon">📋</span> 公式速查表</h2>
+  <table>
+    <tr><th>公式</th><th>说明</th></tr>
+    <tr><td><code>响应比 = (等待时间 + 服务时间) / 服务时间</code></td><td>高响应比优先算法</td></tr>
+    <tr><td><code>页号 P = INT[A / L]</code></td><td>A为逻辑地址，L为页大小</td></tr>
+    <tr><td><code>页内偏移 d = A MOD L</code></td><td></td></tr>
+    <tr><td>物理地址 = 物理块号 × 页大小 + 页内偏移</td><td>基本分页地址变换</td></tr>
+    <tr><td>物理地址 = 基址 + 段内地址</td><td>分段地址变换</td></tr>
+    <tr><td>物理地址 = 逻辑地址 + 重定位寄存器值</td><td>动态重定位</td></tr>
+    <tr><td>缺页率 = 缺页次数 / 总访问次数</td><td></td></tr>
+    <tr><td>有效访问时间 = (1-p) × t + p × f</td><td>p=缺页率, t=内存访问时间, f=缺页中断时间</td></tr>
+  </table>
+
+  <h3 style="margin-top:24px;">复习建议</h3>
+  <ol>
+    <li><strong>概念题重点</strong>：进程定义/状态/PCB、死锁四条件、4种I/O控制方式、文件逻辑结构、动态重定位vs静态重定位</li>
+    <li><strong>计算题重点</strong>：PV操作（水果盘）、调度算法（FCFS/SJF/高响应比）、地址变换、页面置换（FIFO/OPT/LRU）、缺页率</li>
+    <li><strong>公式背牢</strong>：响应比、页号/偏移计算、缺页率、有效访问时间、动态重定位公式</li>
+    <li><strong>FAT和混合索引</strong>：注意大小计算、优缺点对比</li>
+  </ol>
+</section>
+
+</main>
+
+<script>
+const sections = document.querySelectorAll('.section');
+const navItems = document.querySelectorAll('.nav-item');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.getAttribute('id');
+      navItems.forEach(item => {
+        item.classList.toggle('active', item.getAttribute('href') === '#' + id);
       });
-    }, { rootMargin: '-20% 0px -70% 0px' });
-    sections.forEach(s => observer.observe(s));
-  </script>
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
+</script>
 </body>
 </html>
