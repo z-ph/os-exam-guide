@@ -432,27 +432,212 @@ process2() {  // 计算进程
     </div>
   </div>
 
-  <h3>3.4 课后习题（范围内的 ✅ / 范围外的 ❌）</h3>
-  <table>
-    <tr><th>题号</th><th>题目内容</th><th>范围</th></tr>
-    <tr><td>3-1</td><td>FCFS调度算法：计算完成时间、周转时间、带权周转时间</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>3-2</td><td>SJF调度算法：计算平均周转时间和平均带权周转时间</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>3-3</td><td><strong>高响应比优先算法</strong>：计算响应比、执行顺序</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>3-4</td><td>优先级调度（静态 vs 动态）的概念与特点</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>3-5</td><td><strong>死锁的四个必要条件</strong>（互斥、请求保持、不剥夺、环路）</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>3-6</td><td>死锁预防：如何破坏四个必要条件？</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>3-7</td><td><strong>银行家算法</strong>：判断系统是否安全、资源分配是否合理</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>3-8</td><td>资源分配图：有环是否一定死锁？</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>3-9</td><td>死锁避免 vs 死锁预防 vs 死锁检测的区别</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>3-10</td><td>多道批处理调度（允许移动已在内存中的作业，FCFS/SJF对比）</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>3-11</td><td>死锁解除方法：剥夺资源、进程回退、撤销进程</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>3-12</td><td><strong>资源分配图化简</strong>：判断系统是否死锁</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>3-A</td><td><strong>轮转法 RR（时间片轮转）</strong></td><td><span class="tag tag-no">❌</span></td></tr>
-    <tr><td>3-B</td><td><strong>实时调度算法</strong>（EDF、松弛度）</td><td><span class="tag tag-no">❌</span></td></tr>
-    <tr><td>3-C</td><td><strong>多级反馈队列调度</strong></td><td><span class="tag tag-no">❌</span></td></tr>
-    <tr><td>3-D</td><td><strong>高优先权优先调度的抢占式计算</strong></td><td><span class="tag tag-no">❌</span></td></tr>
-  </table>
-</section>
+  <h3>3.4 课后习题详解（范围内的 ✅ / 范围外的 ❌）</h3>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">3-1</span> FCFS调度</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>作业A/B/C/D/E的到达时间分别为0/1/2/3/4，服务时间分别为4/3/5/2/4。用FCFS算法计算完成时间、周转时间和带权周转时间。</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <table>
+          <tr><th>进程</th><th>到达</th><th>服务</th><th>完成</th><th>周转</th><th>带权周转</th></tr>
+          <tr><td>A</td><td>0</td><td>4</td><td>4</td><td>4</td><td>1</td></tr>
+          <tr><td>B</td><td>1</td><td>3</td><td>7</td><td>6</td><td>2</td></tr>
+          <tr><td>C</td><td>2</td><td>5</td><td>12</td><td>10</td><td>2</td></tr>
+          <tr><td>D</td><td>3</td><td>2</td><td>14</td><td>11</td><td>5.5</td></tr>
+          <tr><td>E</td><td>4</td><td>4</td><td>18</td><td>14</td><td>3.5</td></tr>
+        </table>
+        <p>平均周转时间 = (4+6+10+11+14)/5 = <span class="hl">9</span></p>
+        <p>平均带权周转时间 = (1+2+2+5.5+3.5)/5 = <span class="hl">2.8</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">3-2</span> SJF调度</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>同上作业，用SJF（非抢占）算法计算平均周转时间和平均带权周转时间。</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p>SJF按服务时间最短优先：A(0时刻到达，服务4)→D(2)→B(3)→E(4)→C(5)</p>
+        <p>调度顺序：A(0-4) → D(4-6) → B(6-9) → E(9-13) → C(13-18)</p>
+        <p>平均周转时间 = (4+5+8+9+16)/5 = <span class="hl">8.4</span></p>
+        <p>平均带权周转时间 = (1+1.67+1.6+2.25+3.2)/5 = <span class="hl">1.94</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">3-3</span> 高响应比优先</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>作业A/B/C/D的到达时间分别为0/1/2/3，服务时间分别为4/3/2/1。用高响应比优先算法计算调度顺序。</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p>响应比 = (等待时间 + 服务时间) / 服务时间</p>
+        <p>t=0：只有A到达，执行A(0-4)</p>
+        <p>t=4：B等待3，C等待2，D等待1</p>
+        <p>响应比：B=(3+3)/3=2, C=(2+2)/2=2, D=(1+1)/1=2</p>
+        <p>三者相同，按FCFS选B(4-7)</p>
+        <p>t=7：C等待5, D等待4</p>
+        <p>响应比：C=(5+2)/2=3.5, D=(4+1)/1=5 → 选D(7-8)</p>
+        <p>最后执行C(8-10)</p>
+        <p>调度顺序：<span class="hl">A → B → D → C</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">3-4</span> 优先级调度</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>什么是静态优先权？什么是动态优先权？各有什么特点？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p><strong>静态优先权</strong>：整个运行期不变。简单但低优先权作业可能长期不被调度（饥饿）。</p>
+        <p><strong>动态优先权</strong>：如响应比优先，优先权随执行时间下降、随等待时间升高。可以防止饥饿。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">3-5</span> 死锁的四个必要条件</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>什么是死锁？产生死锁的四个必要条件是什么？哪些条件可以破坏？如何破坏？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p><strong>死锁</strong>：多个进程因竞争资源而无限期等待，无法继续执行的状态。</p>
+        <p><strong>四个必要条件</strong>：</p>
+        <ol>
+          <li><strong>互斥条件</strong>：资源的临界性（固有属性，不能破坏）</li>
+          <li><strong>请求和保持条件</strong>：进程已占有资源，又申请新资源 → 破坏：资源一次性分配（全分配，全释放）</li>
+          <li><strong>不剥夺条件</strong>：进程已获得的资源不能被剥夺 → 破坏：新申请不能满足则释放已获得资源</li>
+          <li><strong>环路等待条件</strong>：存在进程-资源的循环等待链 → 破坏：资源的有序分配法（为资源编号）</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">3-6</span> 死锁预防</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>死锁预防如何破坏四个必要条件？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <ul>
+          <li><strong>摒弃请求和保持</strong>：资源一次性分配（AND信号量），进程要么获得全部资源，要么不获得</li>
+          <li><strong>摒弃不剥夺</strong>：新申请不能满足时，释放已获得资源</li>
+          <li><strong>摒弃环路</strong>：资源的有序分配法，给资源编号，进程按编号递增顺序申请</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">3-7</span> 银行家算法</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>什么是安全状态？什么是不安全状态？银行家算法的基本思想是什么？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p><strong>安全状态</strong>：能找到安全序列的状态，即按某种顺序并发进程都能达到获得最大资源而顺序完成。</p>
+        <p><strong>不安全状态</strong>：找不到安全序列的状态。</p>
+        <p><strong>银行家算法</strong>：当进程申请资源时，先假设分配，然后检查系统是否仍处于安全状态。如果是，则真正分配；否则，拒绝分配，让进程等待。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">3-8</span> 资源分配图</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>资源分配图中，有环路是否一定发生死锁？为什么？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p><strong>不一定</strong>。资源分配图中存在环路是死锁的<strong>必要条件</strong>，但不是<strong>充分条件</strong>。</p>
+        <p>只有当环路中的<strong>每类资源只有一个实例</strong>时，才一定发生死锁。如果环路中的资源有多个实例，则可能通过分配其他实例来打破死锁。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">3-9</span> 死锁处理方法对比</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>死锁的预防、避免、检测与解除有什么区别？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <table>
+          <tr><th>方法</th><th>策略</th><th>特点</th></tr>
+          <tr><td><strong>预防</strong></td><td>破坏四个必要条件之一</td><td>有效，但资源利用率低</td></tr>
+          <tr><td><strong>避免</strong></td><td>防止进入不安全状态（银行家算法）</td><td>允许动态申请，但需预知最大需求</td></tr>
+          <tr><td><strong>检测</strong></td><td>检测到死锁再处理</td><td>不限制资源分配，但处理延迟</td></tr>
+          <tr><td><strong>解除</strong></td><td>剥夺资源、进程回退、撤销进程</td><td>与检测配套使用</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">3-10</span> 多道批处理调度</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>多道批处理系统中，允许移动已在内存中的作业时，FCFS和SJF有什么区别？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p>允许移动内存中的作业意味着作业可以换出到外存，让新作业进入内存执行。</p>
+        <p>FCFS仍然按到达顺序执行，但可以通过交换让后面的作业提前进入内存。</p>
+        <p>SJF可以动态选择当前内存中服务时间最短的作业执行，通过交换更灵活地利用内存。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">3-11</span> 死锁解除</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>死锁解除有哪些方法？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <ul>
+          <li><strong>剥夺资源</strong>：从死锁进程中剥夺资源分配给其他进程</li>
+          <li><strong>进程回退</strong>：让死锁进程回退到之前的安全状态</li>
+          <li><strong>撤销进程</strong>：终止一个或多个死锁进程（通常选择代价最小的）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">3-12</span> 资源分配图化简</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>如何用资源分配图化简法判断系统是否死锁？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p>资源分配图化简法：</p>
+        <ol>
+          <li>找一个既不孤立又不阻塞的进程（有请求边且请求的资源可满足）</li>
+          <li>假设该进程获得所需资源并执行完毕，消去其请求边和分配边，使之成为孤立点</li>
+          <li>重复上述步骤，直到所有进程都成为孤立点</li>
+          <li>若不能化简所有边，则系统处于死锁状态</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="exclude-box">
+    <div class="exclude-box-title">❌ 以下不考</div>
+    <p>3-A 轮转法 RR（时间片轮转）</p>
+    <p>3-B 实时调度算法（EDF、松弛度）</p>
+    <p>3-C 多级反馈队列调度</p>
+    <p>3-D 高优先权优先调度的抢占式计算</p>
+  </div>
 
 <!-- CH4 -->
 <section class="section ch4" id="ch4">
@@ -581,25 +766,258 @@ process2() {  // 计算进程
     </div>
   </div>
 
-  <h3>4.6 课后习题（Ch4 全部在考试范围内 ✅）</h3>
-  <table>
-    <tr><th>题号</th><th>题目内容</th><th>类型</th></tr>
-    <tr><td>4-1</td><td><strong>逻辑地址格式</strong>：已知逻辑空间32页，每页2K，物理空间1M，写地址格式</td><td>计算</td></tr>
-    <tr><td>4-2</td><td><strong>页表项计算</strong>：页表有多少项？每项至少多少位？物理空间减半怎么变？</td><td>计算</td></tr>
-    <tr><td>4-3</td><td><strong>逻辑地址→物理地址</strong>：64K主存，1K页大小，4页作业分配到2/4/6/7块</td><td>计算</td></tr>
-    <tr><td>4-4</td><td><strong>地址变换过程图</strong>：以1023为例画出地址变换过程</td><td>概念</td></tr>
-    <tr><td>4-5</td><td><strong>TLB有效访问时间</strong>：无快表 vs 快表命中率85%</td><td>计算</td></tr>
-    <tr><td>4-6</td><td><strong>内存分配算法</strong>：循环适应 vs 最佳适应（12K/10K/9K请求）</td><td>计算</td></tr>
-    <tr><td>4-7</td><td><strong>段式地址变换</strong>：段表基址+段长，判断越界中断</td><td>计算</td></tr>
-    <tr><td>4-8</td><td>分页 vs 分段的主要区别（页是物理单位，段是逻辑单位）</td><td>概念</td></tr>
-    <tr><td>4-9</td><td>段页式存储管理的基本思想</td><td>概念</td></tr>
-    <tr><td>4-10</td><td><strong>紧凑</strong>的概念：为什么要紧凑？何时触发？</td><td>概念</td></tr>
-    <tr><td>4-11</td><td><strong>动态重定位</strong> vs 静态重定位：区别、能否移动、是否支持紧凑</td><td>概念</td></tr>
-    <tr><td>4-12</td><td>固定分区 vs 可变分区的区别</td><td>概念</td></tr>
-    <tr><td>4-13</td><td>首次适应 vs 循环首次适应 vs 最佳适应 vs 最坏适应</td><td>概念</td></tr>
-    <tr><td>4-14</td><td>内存回收时的四种情况（上邻、下邻、上下邻、不邻接）</td><td>概念</td></tr>
-    <tr><td>4-15</td><td>对换（Swapping）的概念：换入/换出</td><td>概念</td></tr>
-  </table>
+  <h3>4.6 课后习题详解（Ch4 全部在考试范围内 ✅）</h3>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">4-1</span> 逻辑地址格式</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>已知逻辑空间有32页，每页2K，物理空间1M，请写出逻辑地址和物理地址的格式（各部分占多少位）。</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p>逻辑空间32页 → 页号需要 <span class="hl">5位</span>（2^5=32）</p>
+        <p>每页2K=2^11 → 页内偏移需要 <span class="hl">11位</span></p>
+        <p>逻辑地址格式：|<strong>页号 5位</strong>|<strong>页内偏移 11位</strong>|</p>
+        <p>物理空间1M=2^20 → 物理地址需要 <span class="hl">20位</span></p>
+        <p>物理地址格式：|<strong>物理块号 9位</strong>|<strong>块内偏移 11位</strong>|</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">4-2</span> 页表项计算</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>在上述条件下，页表有多少项？每项至少多少位？如果物理空间减半，地址格式如何变化？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p>页表项数 = 页数 = <span class="hl">32项</span></p>
+        <p>物理块号位数 = 20-11 = <span class="hl">9位</span>，所以每项至少9位</p>
+        <p>物理空间减半为512K=2^19 → 物理块号位数 = 19-11 = <span class="hl">8位</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">4-3</span> 逻辑地址→物理地址</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>主存64K，页大小1K，某作业有4页，被分配到2/4/6/7物理块。逻辑地址[0,0]、[1,100]、[2,300]、[3,700]对应的物理地址是多少？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p>物理地址 = 物理块号 × 页大小 + 页内偏移</p>
+        <ul>
+          <li>[0,0] → 2 × 1024 + 0 = <span class="hl">2048</span></li>
+          <li>[1,100] → 4 × 1024 + 100 = <span class="hl">4196</span></li>
+          <li>[2,300] → 6 × 1024 + 300 = <span class="hl">6444</span></li>
+          <li>[3,700] → 7 × 1024 + 700 = <span class="hl">7868</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">4-4</span> 地址变换过程</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>以逻辑地址1023为例，画出分页地址变换过程图。</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p>页大小1K=1024，逻辑地址1023：</p>
+        <p>页号 = INT[1023/1024] = <span class="hl">0</span></p>
+        <p>页内偏移 = 1023 MOD 1024 = <span class="hl">1023</span></p>
+        <p>查页表得页0→物理块2，物理地址 = 2 × 1024 + 1023 = <span class="hl">3071</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">4-5</span> TLB有效访问时间</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>设内存访问时间为200ns，快表访问时间为40ns，快表命中率为85%。计算有快表和无快表的有效访问时间。</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p>无快表：需访问页表（内存）+ 访问数据（内存） = 200 + 200 = <span class="hl">400ns</span></p>
+        <p>有快表：0.85 × (40+200) + 0.15 × (40+200+200) = 0.85 × 240 + 0.15 × 440 = 204 + 66 = <span class="hl">270ns</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">4-6</span> 内存分配算法</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>内存空闲分区链为：20K、15K、10K、25K、30K。作业请求序列：12K、10K、9K。分别用循环首次适应和最佳适应算法分配，结果如何？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p><strong>循环首次适应</strong>：从上次分配位置继续查找</p>
+        <ul>
+          <li>12K：从20K开始，20K够 → 分配20K，剩余8K</li>
+          <li>10K：从15K继续，15K够 → 分配15K，剩余5K</li>
+          <li>9K：从10K继续，10K够 → 分配10K，剩余1K</li>
+        </ul>
+        <p><strong>最佳适应</strong>：找最小满足的分区</p>
+        <ul>
+          <li>12K：10K不够，15K够 → 分配15K，剩余3K</li>
+          <li>10K：10K正好 → 分配10K，剩余0K</li>
+          <li>9K：20K够 → 分配20K，剩余11K</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">4-7</span> 段式地址变换</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>段表如下：段0（基址1000，段长2000），段1（基址3000，段长1500），段2（基址5000，段长1000）。判断以下逻辑地址是否越界，若未越界计算物理地址：[0,1500]、[1,2000]、[2,500]。</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <ul>
+          <li>[0,1500]：1500 < 2000，未越界 → 物理地址 = 1000 + 1500 = <span class="hl">2500</span></li>
+          <li>[1,2000]：2000 > 1500，<span class="hl-red">越界中断</span></li>
+          <li>[2,500]：500 < 1000，未越界 → 物理地址 = 5000 + 500 = <span class="hl">5500</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">4-8</span> 分页 vs 分段</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>分页和分段的主要区别是什么？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <table>
+          <tr><th>对比项</th><th>分页</th><th>分段</th></tr>
+          <tr><td>单位性质</td><td><strong>物理单位</strong></td><td><strong>逻辑单位</strong></td></tr>
+          <tr><td>页/段大小</td><td>固定（系统决定）</td><td>不固定（用户决定）</td></tr>
+          <tr><td>地址空间</td><td>一维</td><td>二维（段号+段内地址）</td></tr>
+          <tr><td>目的</td><td>提高内存利用率</td><td>方便编程、共享、保护</td></tr>
+          <tr><td>碎片</td><td>内碎片</td><td>外碎片</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">4-9</span> 段页式存储管理</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>什么是段页式存储管理？它的基本思想是什么？有什么优缺点？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p><strong>段页式存储管理</strong>：先分段、再分页的存储管理方式。作业按逻辑结构分成若干段，每段再分成若干页。</p>
+        <p><strong>基本思想</strong>：分段满足用户要求（逻辑独立性），分页满足系统要求（内存管理方便）。将分页和分段两种方式结合起来，用分段方法来分配和管理用户地址空间，用分页方法来管理物理存储空间。</p>
+        <p><strong>优点</strong>：兼具分页和分段的优点——既有分段的逻辑独立性（方便共享和保护），又有分页的高内存利用率（减少外碎片）。</p>
+        <p><strong>缺点</strong>：地址变换需要查两次表（段表+页表），开销增大；软硬件复杂度增加。</p>
+        <p><strong>地址变换过程</strong>：逻辑地址 → 段号查段表 → 段内页号查页表 → 物理块号 + 页内偏移 → 物理地址。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">4-10</span> 紧凑</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>什么是紧凑？为什么要紧凑？紧凑需要什么条件？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p><strong>紧凑</strong>：将内存中的进程移动，使它们相邻，空出大块连续空间。</p>
+        <p><strong>为什么要紧凑</strong>：连续分配产生大量<strong>外部碎片</strong>（分散的小空闲区），虽然空闲总量够，但没有足够大的连续空间分配给新进程。</p>
+        <p><strong>条件</strong>：必须采用<strong>动态重定位</strong>，因为进程搬家后物理地址变了，需要重定位寄存器实时转换地址。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">4-11</span> 动态重定位 vs 静态重定位</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>比较动态重定位和静态重定位的区别，为什么紧凑必须配合动态重定位？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <table>
+          <tr><th>对比项</th><th>静态重定位</th><th>动态重定位</th></tr>
+          <tr><td>转换时机</td><td>装入时一次完成</td><td>运行时持续进行</td></tr>
+          <tr><td>硬件支持</td><td>不需要</td><td>需要重定位寄存器</td></tr>
+          <tr><td>能否移动</td><td>不能</td><td>能</td></tr>
+          <tr><td>能否紧凑</td><td>不能</td><td>能</td></tr>
+        </table>
+        <p>紧凑必须配合动态重定位：紧凑把进程搬家后物理地址变了，但代码里的逻辑地址没变，只有动态重定位能在运行时实时转换地址。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">4-12</span> 固定分区 vs 可变分区</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>比较固定分区和可变分区（动态分区）的区别。</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <table>
+          <tr><th>对比项</th><th>固定分区</th><th>可变分区</th></tr>
+          <tr><td>分区时机</td><td>预先划分</td><td>运行时动态分配</td></tr>
+          <tr><td>分区大小</td><td>固定</td><td>根据作业需求</td></tr>
+          <tr><td>碎片</td><td>内碎片</td><td>外碎片</td></tr>
+          <tr><td>数据结构</td><td>分区表</td><td>空闲分区表/链</td></tr>
+          <tr><td>适用</td><td>简单系统</td><td>多道程序系统</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">4-13</span> 四种分配算法</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>首次适应、循环首次适应、最佳适应、最坏适应算法各有什么特点？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <table>
+          <tr><th>算法</th><th>策略</th><th>优点</th><th>缺点</th></tr>
+          <tr><td>首次适应</td><td>从低地址找第一个够大的</td><td>简单</td><td>低地址碎片多</td></tr>
+          <tr><td>循环首次适应</td><td>从上次位置继续找</td><td>分配均匀</td><td>缺乏大分区</td></tr>
+          <tr><td>最佳适应</td><td>找最小满足的分区</td><td>减少浪费</td><td>产生小碎片</td></tr>
+          <tr><td>最坏适应</td><td>找最大的分区</td><td>减少小碎片</td><td>大作业难满足</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">4-14</span> 内存回收</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>内存回收时，空闲分区与相邻分区的关系有哪四种情况？如何处理？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p>回收分区与相邻空闲分区的关系：</p>
+        <ol>
+          <li><strong>上邻接</strong>：回收分区上方有相邻空闲分区 → 合并为一个分区，起始地址为上方分区，大小为两者之和</li>
+          <li><strong>下邻接</strong>：回收分区下方有相邻空闲分区 → 合并为一个分区，起始地址为回收分区，大小为两者之和</li>
+          <li><strong>上下都邻接</strong>：上下都有空闲分区 → 合并三个分区为一个</li>
+          <li><strong>不邻接</strong>：无相邻空闲分区 → 新建空闲分区表项</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">4-15</span> 对换（Swapping）</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>什么是对换？对换的作用是什么？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p><strong>对换</strong>：将内存中暂时不能运行的进程或暂时不用的程序和数据换出到外存，将已具备运行条件的进程或进程所需的程序和数据换入内存。</p>
+        <p><strong>作用</strong>：提高内存利用率，解决内存紧张问题。</p>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- CH5 -->
@@ -633,26 +1051,195 @@ process2() {  // 计算进程
     <li><strong>页表项</strong>：页号 | 物理块号 | 状态位P | 访问字段A | 修改位M | 外存地址</li>
   </ul>
 
-  <h3>5.2 课后习题（范围内的 ✅ / 范围外的 ❌）</h3>
-  <table>
-    <tr><th>题号</th><th>题目内容</th><th>范围</th></tr>
-    <tr><td>5-1</td><td><strong>页面置换过程</strong>：3个物理块，引用串7,0,1,2... 用OPT/FIFO/LRU分别计算缺页次数</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>5-2</td><td><strong>二维数组缺页分析</strong>：100×100数组，每页200整数，按行访问 vs 按列访问缺页次数</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>5-3</td><td><strong>缺页率与有效访问时间</strong>：修改页20ms，未修改8ms，70%被修改，求最大缺页率</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>5-4</td><td><strong>虚拟地址转物理地址</strong>：32页×1K，物理16K，页0/1/2/3→5/10/4/7，0A5C/103C/1A5C</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>5-5</td><td><strong>段表访问分析</strong>：存在位、存取控制（R/W/E）、段长检查，判断中断类型</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>5-6</td><td>请求分页的基本原理：局部性原理、页表项字段（P/A/M）</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>5-7</td><td>缺页中断处理过程（6步）</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>5-8</td><td>虚拟存储器的特征（离散性、多次性、对换性、虚拟性）</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>5-9</td><td>页面大小的选择对系统的影响</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>5-10</td><td>页表中中断位、访问位、修改位、辅存地址的含义</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>5-11</td><td>地址变换：给定页表，逻辑地址1800和3600的转换过程</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>5-A</td><td><strong>Clock置换算法</strong>（简单Clock、改进型Clock）</td><td><span class="tag tag-no">❌</span></td></tr>
-    <tr><td>5-B</td><td>抖动（Thrashing）的概念与预防</td><td><span class="tag tag-no">❌</span></td></tr>
-    <tr><td>5-C</td><td>工作集模型</td><td><span class="tag tag-no">❌</span></td></tr>
-    <tr><td>5-D</td><td>CPU利用率与多道程序度的关系（判断抖动）</td><td><span class="tag tag-no">❌</span></td></tr>
-  </table>
-</section>
+  <h3>5.2 课后习题详解（范围内的 ✅ / 范围外的 ❌）</h3>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">5-1</span> 页面置换过程</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>某进程分配3个物理块，访问页面引用串为：7,0,1,2,0,3,0,4,2,3,0,3,2,1,2,0,1,7,0,1。分别用OPT、FIFO、LRU算法计算缺页次数和缺页率。</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p><strong>OPT（最优）</strong>：缺页 <span class="hl">9次</span></p>
+        <p><strong>FIFO（先进先出）</strong>：缺页 <span class="hl">15次</span></p>
+        <p><strong>LRU（最近最久未使用）</strong>：缺页 <span class="hl">12次</span></p>
+        <p>总访问20次，缺页率分别为：OPT 45%，FIFO 75%，LRU 60%</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">5-2</span> 二维数组缺页分析</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>一个100×100的二维数组，每页存放200个整数（每个整数占4字节）。分别按行优先和列优先顺序访问，计算缺页次数。</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p>数组共10000个整数，每页200个 → 需要 <span class="hl">50页</span></p>
+        <p><strong>按行优先</strong>（C语言默认）：同行元素在同一页，顺序访问 → <span class="hl">50次缺页</span></p>
+        <p><strong>按列优先</strong>：每访问一个元素就跳到下一行，可能跨页 → <span class="hl">10000次缺页</span>（最坏情况）</p>
+        <div class="tip"><div class="tip-title">💡 结论</div>按行访问利用了空间局部性，缺页次数远小于按列访问。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">5-3</span> 缺页率与有效访问时间</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>已知置换一个已修改页的平均时间为20ms，未修改页为8ms，内存访问时间为100ns。假设被置换的页有70%被修改过，若要求有效访问时间不超过200ns，求最大缺页率。</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p>平均缺页中断时间 f = 0.7 × 20ms + 0.3 × 8ms = 14 + 2.4 = <span class="hl">16.4ms</span></p>
+        <p>有效访问时间 = (1-p) × 100ns + p × 16.4ms ≤ 200ns</p>
+        <p>100 - 100p + 16400000p ≤ 200</p>
+        <p>16399900p ≤ 100</p>
+        <p>p ≤ 100 / 16399900 ≈ <span class="hl">6.1 × 10^-6</span>（约0.00061%）</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">5-4</span> 虚拟地址转物理地址</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>系统有32页，每页1K，物理空间16K。页表：页0→5，页1→10，页2→4，页3→7。将逻辑地址0A5C、103C、1A5C转换为物理地址。</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p>页大小1K=1024，页号占5位（32页），页内偏移占10位</p>
+        <ul>
+          <li>0A5C(hex) = 0000 1010 0101 1100(binary) → 页号=2, 偏移=156 → 物理块4 → 物理地址=4×1024+156=<span class="hl">4252</span></li>
+          <li>103C(hex) = 0001 0000 0011 1100(binary) → 页号=4, 偏移=60 → 页4不存在 → <span class="hl-red">缺页中断</span></li>
+          <li>1A5C(hex) = 0001 1010 0101 1100(binary) → 页号=6, 偏移=156 → 页6不存在 → <span class="hl-red">缺页中断</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">5-5</span> 段表访问分析</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>段表如下：段0（存在=1，存取=R，段长=1000），段1（存在=0，存取=W，段长=2000），段2（存在=1，存取=E，段长=500）。判断访问[0,500]、[1,100]、[2,600]、[0,1200]分别产生什么中断？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <ul>
+          <li>[0,500]：存在=1，500&lt;1000，R权限 → <span class="hl">正常访问</span></li>
+          <li>[1,100]：存在=0 → <span class="hl-red">缺段中断</span></li>
+          <li>[2,600]：存在=1，600&gt;500 → <span class="hl-red">越界中断</span></li>
+          <li>[0,1200]：存在=1，1200&gt;1000 → <span class="hl-red">越界中断</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">5-6</span> 请求分页的基本原理</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>什么是局部性原理？请求分页的页表项包含哪些字段？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p><strong>局部性原理</strong>：</p>
+        <ul>
+          <li><strong>时间局部性</strong>：最近被访问的页很可能再次被访问（如循环）</li>
+          <li><strong>空间局部性</strong>：与当前访问页相邻的页很可能被访问（如顺序访问）</li>
+        </ul>
+        <p><strong>页表项字段</strong>：页号 | 物理块号 | 状态位P | 访问字段A | 修改位M | 外存地址</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">5-7</span> 缺页中断处理过程</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>简述缺页中断的处理过程（6步）。</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <ol>
+          <li>保存CPU现场</li>
+          <li>从外存找到该页</li>
+          <li>分配一个空闲物理块</li>
+          <li>从外存读入该页到物理块</li>
+          <li>修改页表（设置存在位、物理块号等）</li>
+          <li>恢复CPU现场，重新执行被中断的指令</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">5-8</span> 虚拟存储器的特征</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>虚拟存储器的四个特征是什么？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <ul>
+          <li><strong>离散性</strong>：进程不必连续存放</li>
+          <li><strong>多次性</strong>：进程可分批装入内存</li>
+          <li><strong>对换性</strong>：进程可在运行中换入换出</li>
+          <li><strong>虚拟性</strong>：用户感觉内存远大于实际</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">5-9</span> 页面大小的选择</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>页面大小对系统有什么影响？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <ul>
+          <li><strong>页面太小</strong>：页表过大，内存开销大；减少内碎片但增加缺页次数</li>
+          <li><strong>页面太大</strong>：内碎片增加；减少页表大小但降低内存利用率</li>
+          <li><strong>一般选择</strong>：2的幂（如1K、2K、4K），便于地址计算</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">5-10</span> 页表字段含义</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>页表中的中断位（存在位）、访问位、修改位、辅存地址分别表示什么？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <ul>
+          <li><strong>存在位（中断位）</strong>：该页是否在内存中（1=在，0=不在）</li>
+          <li><strong>访问位</strong>：该页是否被访问过（用于LRU等置换算法）</li>
+          <li><strong>修改位</strong>：该页是否被修改过（换出时决定是否写回外存）</li>
+          <li><strong>辅存地址</strong>：该页在外存中的位置</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">5-11</span> 地址变换</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>页表：页0→块2，页1→块3，页2→块6。页大小1K。逻辑地址1800和3600的转换过程是什么？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p>页大小1K=1024</p>
+        <p>逻辑地址1800：页号=INT[1800/1024]=<span class="hl">1</span>，偏移=1800%1024=<span class="hl">776</span> → 物理块3 → 物理地址=3×1024+776=<span class="hl">3848</span></p>
+        <p>逻辑地址3600：页号=INT[3600/1024]=<span class="hl">3</span>，偏移=3600%1024=<span class="hl">528</span> → 页3不存在 → <span class="hl-red">缺页中断</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exclude-box">
+    <div class="exclude-box-title">❌ 以下不考</div>
+    <p>5-A Clock置换算法（简单Clock、改进型Clock）</p>
+    <p>5-B 抖动（Thrashing）的概念与预防</p>
+    <p>5-C 工作集模型</p>
+    <p>5-D CPU利用率与多道程序度的关系</p>
+  </div></section>
 
 <!-- CH6 -->
 <section class="section ch6" id="ch6">
@@ -746,22 +1333,108 @@ process2() {  // 计算进程
     </div>
   </div>
 
-    <h3>6.5 课后习题（范围内的 ✅ / 范围外的 ❌）</h3>
-  <p><strong>Ch6考试以概念分析为主</strong>，范围内的内容主要是四种I/O控制方式的对比、SPOOLing、设备独立性等概念题，没有典型计算题。下面列出重点概念题：</p>
-  <table>
-    <tr><th>题号</th><th>题目内容</th><th>范围</th></tr>
-    <tr><td>6-1</td><td><strong>四种I/O控制方式对比</strong>（程序I/O、中断、DMA、I/O通道）：CPU干预程度、传输单位、适用场景</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>6-2</td><td>DMA方式为什么比中断方式快？以什么为单位传输？</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>6-3</td><td>I/O通道方式与DMA方式的根本区别是什么？</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>6-4</td><td><strong>SPOOLing技术</strong>：假脱机的概念，如何将独占设备变共享？为什么打印机用SPOOLing？</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>6-5</td><td>设备独立性的概念：逻辑设备名 vs 物理设备名，有什么好处？</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>6-6</td><td>设备分配中的数据结构：DCT、COCT、CHCT、SDT分别是什么？</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>6-A</td><td><strong>缓冲管理</strong>（单缓冲、双缓冲、循环缓冲、缓冲池）</td><td><span class="tag tag-no">❌</span></td></tr>
-    <tr><td>6-B</td><td><strong>磁盘调度算法</strong>（FCFS/SSTF/SCAN/C-SCAN等）</td><td><span class="tag tag-no">❌</span></td></tr>
-    <tr><td>6-C</td><td><strong>磁盘性能参数</strong>（寻道时间、旋转延迟、传输时间）</td><td><span class="tag tag-no">❌</span></td></tr>
-    <tr><td>6-D</td><td><strong>RAID技术</strong>（RAID 0/1/3/5/6/7）</td><td><span class="tag tag-no">❌</span></td></tr>
-  </table>
-</section>
+    <h3>6.3 课后习题详解（范围内的 ✅ / 范围外的 ❌）</h3>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">6-1</span> 四种I/O控制方式对比</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>简述程序I/O、中断驱动、DMA、I/O通道四种方式的特点，并比较它们的CPU干预程度、传输单位和适用场景。</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <table>
+          <tr><th>方式</th><th>CPU干预程度</th><th>传输单位</th><th>适用场景</th></tr>
+          <tr><td><strong>程序I/O</strong></td><td>完全干预</td><td>字/字节</td><td>简单低速</td></tr>
+          <tr><td><strong>中断驱动</strong></td><td>每字中断</td><td>字/字节</td><td>中低速</td></tr>
+          <tr><td><strong>DMA</strong></td><td>开始/结束</td><td>数据块</td><td>高速</td></tr>
+          <tr><td><strong>I/O通道</strong></td><td>发命令即可</td><td>一组块</td><td>大量数据</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">6-2</span> DMA方式的特点</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>DMA方式为什么比中断方式快？DMA以什么为单位传输？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p><strong>为什么快</strong>：DMA方式在DMA控制器的控制下，数据直接在设备和内存之间传输，<strong>无需CPU干预</strong>，只在开始和结束时需要CPU。而中断方式每传一个数据就要中断一次CPU。</p>
+        <p><strong>传输单位</strong>：以<strong>数据块</strong>为单位传输。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">6-3</span> I/O通道与DMA的区别</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>I/O通道方式与DMA方式的根本区别是什么？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p>DMA需要CPU对数据传送进行初始化（设置内存地址、传送字数等），而I/O通道有自己的通道程序，CPU只需发命令即可，通道独立完成整个I/O操作。</p>
+        <p>I/O通道可以执行<strong>一组块</strong>的传输，DMA只能执行<strong>一个块</strong>的传输。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">6-4</span> SPOOLing技术</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>什么是SPOOLing技术？它是如何将独占设备变成共享设备的？为什么打印机用SPOOLing？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p><strong>SPOOLing（假脱机技术）</strong>：利用磁盘作为缓冲，将独占设备改造成共享设备的技术。</p>
+        <p><strong>原理</strong>：多个用户可以同时请求使用打印机，但实际上操作系统将这些请求排队，依次从磁盘缓冲区输出到打印机。用户感觉自己在独占使用打印机，实际上是共享的。</p>
+        <p><strong>为什么打印机用SPOOLing</strong>：打印机是独占设备，速度慢。用SPOOLing可以让用户立即完成打印请求（实际写入磁盘），不必等待打印机实际打印，提高了用户体验和设备利用率。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">6-5</span> 设备独立性</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>什么是设备独立性？使用逻辑设备名有什么好处？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p><strong>设备独立性</strong>：用户程序使用<strong>逻辑设备名</strong>，与物理设备无关。操作系统负责逻辑设备到物理设备的映射。</p>
+        <p><strong>好处</strong>：</p>
+        <ul>
+          <li>程序与具体物理设备无关，设备更换时程序无需修改</li>
+          <li>便于系统分配设备（可根据物理设备状态灵活分配）</li>
+          <li>提高了系统的可适应性和可扩展性</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">6-6</span> 设备分配数据结构</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>设备分配中的数据结构DCT、COCT、CHCT、SDT分别是什么？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <ul>
+          <li><strong>DCT</strong>（Device Control Table）：设备控制表，每台设备一张</li>
+          <li><strong>COCT</strong>（Controller Control Table）：控制器控制表，每个控制器一张</li>
+          <li><strong>CHCT</strong>（Channel Control Table）：通道控制表，每个通道一张</li>
+          <li><strong>SDT</strong>（System Device Table）：系统设备表，整个系统一张</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="exclude-box">
+    <div class="exclude-box-title">❌ 以下不考</div>
+    <p>6-A 缓冲管理（单缓冲、双缓冲、循环缓冲、缓冲池）</p>
+    <p>6-B 磁盘调度算法（FCFS/SSTF/SCAN/C-SCAN等）</p>
+    <p>6-C 磁盘性能参数（寻道时间、旋转延迟、传输时间）</p>
+    <p>6-D RAID技术（RAID 0/1/3/5/6/7）</p>
+  </div>
 
 <!-- CH7 -->
 <section class="section ch7" id="ch7">
@@ -878,21 +1551,149 @@ process2() {  // 计算进程
     </div>
   </div>
 
-    <h3>7.5 课后习题（Ch7 全部在考试范围内 ✅）</h3>
-  <p><strong>Ch7考试以概念分析为主</strong>，文件管理的内容主要是文件目录结构、文件逻辑结构、索引节点、文件共享与保护等概念题，没有典型计算题。下面列出重点概念题：</p>
-  <table>
-    <tr><th>题号</th><th>题目内容</th><th>类型</th></tr>
-    <tr><td>7-1</td><td>文件目录结构：单级/两级/树形目录的特点，各有什么优缺点？</td><td>概念</td></tr>
-    <tr><td>7-2</td><td>顺序文件（串结构 vs 顺序结构）的优缺点，各适合什么场景？</td><td>概念</td></tr>
-    <tr><td>7-3</td><td>索引文件的特点：为什么查找速度快？为什么增加存储开销？</td><td>概念</td></tr>
-    <tr><td>7-4</td><td><strong>索引节点inode</strong>：UNIX中目录项和inode分别存放什么？为什么用inode？</td><td>概念</td></tr>
-    <tr><td>7-5</td><td>文件共享方式：硬链接（count计数）vs 软链接（符号链接）的区别</td><td>概念</td></tr>
-    <tr><td>7-6</td><td>访问控制矩阵/访问控制列表ACL的概念，如何实现文件保护？</td><td>概念</td></tr>
-    <tr><td>7-7</td><td>文件保护：口令保护、加密保护、访问控制三种方式的特点</td><td>概念</td></tr>
-    <tr><td>7-8</td><td>基于索引节点的共享（count计数）的分配与回收过程</td><td>概念</td></tr>
-    <tr><td>7-9</td><td>环保护机构：访问规则（低环访问高环数据？高环调用低环服务？）</td><td>概念</td></tr>
-  </table>
-</section>
+    <h3>7.5 课后习题详解（Ch7 全部在考试范围内 ✅）</h3>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">7-1</span> 文件目录结构</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>比较单级目录、两级目录、树形目录的特点，各有什么优缺点？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <table>
+          <tr><th>目录结构</th><th>特点</th><th>优点</th><th>缺点</th></tr>
+          <tr><td><strong>单级目录</strong></td><td>所有文件放在同一目录</td><td>简单</td><td>文件名不能重复</td></tr>
+          <tr><td><strong>两级目录</strong></td><td>主文件目录+用户文件目录</td><td>不同用户可重名</td><td>用户间不能共享</td></tr>
+          <tr><td><strong>树形目录</strong></td><td>多级层次结构</td><td>便于管理、共享</td><td>查找路径长</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">7-2</span> 顺序文件</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>顺序文件（串结构 vs 顺序结构）的优缺点是什么？各适合什么场景？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p><strong>串结构</strong>：按存入时间先后排序。简单，但检索效率低。</p>
+        <p><strong>顺序结构</strong>：按用户指定的关键字排序。检索效率高（可用二分查找），但插入删除困难。</p>
+        <p><strong>优点</strong>：批量存取效率高，只有顺序文件能存储在磁带上。</p>
+        <p><strong>缺点</strong>：插入删除困难，交互应用性能差。</p>
+        <p><strong>适合场景</strong>：批量处理、磁带存储。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">7-3</span> 索引文件</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>索引文件的特点是什么？为什么查找速度快？为什么增加存储开销？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p><strong>特点</strong>：为变长记录文件建立索引表，索引表按关键字排序（定长记录的顺序文件）。</p>
+        <p><strong>查找速度快</strong>：因为索引表是定长记录的顺序文件，可以用二分查找等高效算法快速定位。</p>
+        <p><strong>增加存储开销</strong>：需要额外的存储空间来存放索引表，每条记录对应一个索引项。</p>
+        <p><strong>适合场景</strong>：变长记录、随机访问频繁的场景。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">7-4</span> 索引节点 inode</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>在UNIX中，为什么要引入inode？目录项和inode分别存放什么？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p><strong>引入inode的原因</strong>：将文件名与文件属性信息分离，便于文件共享和快速查找。</p>
+        <p><strong>目录项</strong>：只包含<strong>文件名</strong>和指向inode的<strong>指针</strong>。</p>
+        <p><strong>inode</strong>：存放文件的元数据，包括文件类型、大小、权限、时间戳、盘块地址等。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">7-5</span> 硬链接 vs 软链接</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>比较硬链接和软链接（符号链接）的区别。</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <table>
+          <tr><th>对比项</th><th>硬链接</th><th>软链接（符号链接）</th></tr>
+          <tr><td>实现方式</td><td>共享inode（count计数）</td><td>新建文件，存放目标路径</td></tr>
+          <tr><td>删除原文件</td><td>不影响硬链接</td><td>软链接失效（悬空）</td></tr>
+          <tr><td>跨文件系统</td><td>不能</td><td>能</td></tr>
+          <tr><td>链接目录</td><td>不能</td><td>能</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">7-6</span> 访问控制</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>访问控制矩阵/访问控制列表ACL的概念是什么？如何实现文件保护？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p><strong>访问控制矩阵</strong>：二维矩阵，行表示用户，列表示文件，矩阵元素表示权限（R/W/X）。</p>
+        <p><strong>ACL（访问控制列表）</strong>：每个文件附带一个列表，列出哪些用户/组有哪些权限。</p>
+        <p><strong>文件保护实现</strong>：通过检查用户的访问权限，决定是否允许访问（读/写/执行）。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">7-7</span> 文件保护方式</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>文件保护的三种方式（口令保护、加密保护、访问控制）各有什么特点？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <table>
+          <tr><th>方式</th><th>特点</th><th>优缺点</th></tr>
+          <tr><td><strong>口令保护</strong></td><td>用户输入口令才能访问</td><td>简单，但口令可能被破解</td></tr>
+          <tr><td><strong>加密保护</td><td>文件内容加密存储</td><td>安全性高，但加密解密开销大</td></tr>
+          <tr><td><strong>访问控制</strong></td><td>按用户/组设置权限</td><td>灵活，是OS主要采用的方式</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">7-8</span> 基于索引节点的共享</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>基于索引节点的共享（count计数）的分配与回收过程是什么？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p><strong>分配（创建硬链接）</strong>：inode中的count加1，目录项指向同一个inode。</p>
+        <p><strong>回收（删除链接）</strong>：count减1，当count=0时，才真正释放文件占用的磁盘空间。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">7-9</span> 环保护机构</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>环保护机构的访问规则是什么？低环能访问高环数据吗？高环能调用低环服务吗？</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p>环保护机构将进程和数据分成多个环（0环为最高特权，如内核；3环为最低特权，如用户程序）。</p>
+        <ul>
+          <li><strong>低环不能访问高环数据</strong>（防止用户程序访问内核数据）</li>
+          <li><strong>高环可以访问低环数据</strong></li>
+          <li><strong>高环可以调用低环服务</strong>（通过受控的接口，如系统调用）</li>
+          <li><strong>低环不能直接调用高环服务</strong>（需要通过系统调用门）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
 <!-- CH8 -->
 <section class="section ch8" id="ch8">
@@ -990,42 +1791,71 @@ process2() {  // 计算进程
   </div>
 
   <h3>8.5 课后习题（范围内的 ✅ / 范围外的 ❌）</h3>
-    <h3>8.4 课后习题（范围内的 ✅ / 范围外的 ❌）</h3>
-  <p><strong>Ch8有计算题</strong>：FAT12/16/32的容量计算、混合索引最大文件大小计算。下面列出具体习题：</p>
-  <table>
-    <tr><th>题号</th><th>题目内容</th><th>类型</th><th>范围</th></tr>
-    <tr><td>8-1</td><td><strong>FAT12容量计算</strong>：表项12位，以盘块(512B)为基本分配单位，求最大分区容量和最大磁盘容量</td><td>计算</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>8-2</td><td><strong>FAT16容量计算</strong>：表项16位，每簇64个盘块，求最大分区空间；分析簇内碎片问题</td><td>计算</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>8-3</td><td><strong>FAT32容量计算</strong>：表项4字节（实际28位），簇大小4KB，求单个最大磁盘空间</td><td>计算</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>8-4</td><td>FAT12/16/32的对比：容量增大但存储开销增大</td><td>概念</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>8-5</td><td><strong>混合索引最大文件大小</strong>：盘块4KB，地址4字节，计算直接/一次间接/二次间接/三次间接的大小</td><td>计算</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>8-6</td><td>文件物理结构比较：连续分配/链接分配/索引分配的优缺点</td><td>概念</td><td><span class="tag tag-ok">✅</span></td></tr>
-    <tr><td>8-A</td><td><strong>磁盘冗余阵列RAID</strong></td><td>—</td><td><span class="tag tag-no">❌</span></td></tr>
-    <tr><td>8-B</td><td><strong>RAID的分级</strong>（RAID 0~7）</td><td>—</td><td><span class="tag tag-no">❌</span></td></tr>
-    <tr><td>8-C</td><td><strong>数据一致性控制、事务、检查点、恢复算法</strong></td><td>—</td><td><span class="tag tag-no">❌</span></td></tr>
-    <tr><td>8-D</td><td><strong>磁盘镜像/磁盘双工</strong></td><td>—</td><td><span class="tag tag-no">❌</span></td></tr>
-    <tr><td>8-E</td><td><strong>并行交叉存取</strong></td><td>—</td><td><span class="tag tag-no">❌</span></td></tr>
-  </table>
-
-  <h3>8.5 计算例题详解</h3>
+    <h3>8.4 课后习题详解（范围内的 ✅ / 范围外的 ❌）</h3>
 
   <div class="exercise">
-    <div class="exercise-header"><span class="num">例1</span> FAT12/16/32 容量计算</div>
+    <div class="exercise-header"><span class="num">8-1</span> FAT12容量计算</div>
     <div class="exercise-body">
       <h5>题目</h5>
-      <p>分别计算FAT12、FAT16、FAT32的最大分区容量。已知：FAT12表项12位，FAT16表项16位，FAT32表项4字节（实际28位）；盘块大小512B；FAT16每簇64个盘块，FAT32簇大小4KB。</p>
+      <p>FAT12文件系统中，FAT表项占12位，以盘块（512B）为基本分配单位。求最大分区容量和最大磁盘容量。</p>
       <div class="answer">
         <div class="answer-label">解答</div>
-        <p><strong>FAT12</strong>：最大分区 = 2<sup>12</sup> × 512B = 4096 × 512B = <span class="hl">2MB</span></p>
-        <p>整个磁盘最大容量 = 4 × 2MB = <span class="hl">8MB</span></p>
-        <p><strong>FAT16</strong>：最大分区 = 2<sup>16</sup> × 64 × 512B = 65536 × 32768B = <span class="hl">2GB</span></p>
-        <p><strong>FAT32</strong>：最大磁盘 = 4KB × 2<sup>28</sup> = 4096 × 268435456 = <span class="hl">1TB</span></p>
+        <p>FAT12最多有 2^12 = 4096 个表项</p>
+        <p>最大分区容量 = 4096 × 512B = <span class="hl">2MB</span></p>
+        <p>整个磁盘最多4个分区 → 最大磁盘容量 = 4 × 2MB = <span class="hl">8MB</span></p>
       </div>
     </div>
   </div>
 
   <div class="exercise">
-    <div class="exercise-header"><span class="num">例2</span> 混合索引最大文件大小</div>
+    <div class="exercise-header"><span class="num">8-2</span> FAT16容量计算</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>FAT16文件系统中，FAT表项占16位，每簇64个盘块（每个盘块512B）。求最大分区空间，并分析簇内碎片问题。</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p>FAT16最多有 2^16 = 65536 个簇</p>
+        <p>每簇 = 64 × 512B = 32KB</p>
+        <p>最大分区空间 = 65536 × 32KB = <span class="hl">2GB</span></p>
+        <p><strong>簇内碎片问题</strong>：文件大小不是簇大小的整数倍时，最后一个簇会产生内部碎片。平均浪费约半个簇，即16KB。对于大量小文件，浪费可达10%~20%。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">8-3</span> FAT32容量计算</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>FAT32文件系统中，FAT表项占4字节（实际使用28位），簇大小为4KB。求单个最大磁盘空间。</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <p>FAT32最多有 2^28 = 268435456 个簇</p>
+        <p>最大磁盘空间 = 268435456 × 4KB = <span class="hl">1TB</span></p>
+        <p>FAT32可用较小的簇（如4KB），相比FAT16的32KB簇，大幅减少了簇内碎片。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">8-4</span> FAT对比</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>比较FAT12、FAT16、FAT32的优缺点。</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <table>
+          <tr><th>类型</th><th>表项位数</th><th>最大容量</th><th>优缺点</th></tr>
+          <tr><td>FAT12</td><td>12位</td><td>2MB（分区）/ 8MB（磁盘）</td><td>简单，但容量太小</td></tr>
+          <tr><td>FAT16</td><td>16位</td><td>2GB</td><td>容量增大，但簇内碎片大（浪费10%~20%）</td></tr>
+          <tr><td>FAT32</td><td>28位（实际）</td><td>1TB</td><td>容量大，可用小簇减少碎片，但FAT表开销大</td></tr>
+        </table>
+        <p><strong>趋势</strong>：FAT12 → FAT16 → FAT32，表项位数增大，可管理磁盘容量增大，但FAT表存储开销也随之增大。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">8-5</span> 混合索引最大文件大小</div>
     <div class="exercise-body">
       <h5>题目</h5>
       <p>在UNIX System V中，inode设13个地址项（10个直接地址、1个一次间接、1个二次间接、1个三次间接）。盘块大小4KB，每个地址占4字节。计算最大文件大小。</p>
@@ -1043,7 +1873,32 @@ process2() {  // 计算进程
       </div>
     </div>
   </div>
-</section>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="num">8-6</span> 文件物理结构对比</div>
+    <div class="exercise-body">
+      <h5>题目</h5>
+      <p>比较连续分配、链接分配、索引分配三种文件物理结构的优缺点。</p>
+      <div class="answer">
+        <div class="answer-label">解答</div>
+        <table>
+          <tr><th>分配方式</th><th>优点</th><th>缺点</th></tr>
+          <tr><td><strong>连续分配</strong></td><td>速度快，支持随机访问</td><td>产生碎片，不利于增长</td></tr>
+          <tr><td><strong>链接分配</strong></td><td>无碎片，利于增长</td><td>随机访问慢，指针占用空间</td></tr>
+          <tr><td><strong>索引分配</strong></td><td>支持随机访问，无碎片</td><td>索引块开销，访问需读索引</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="exclude-box">
+    <div class="exclude-box-title">❌ 以下不考</div>
+    <p>8-A 磁盘冗余阵列RAID</p>
+    <p>8-B RAID的分级（RAID 0~7）</p>
+    <p>8-C 数据一致性控制、事务、检查点、恢复算法</p>
+    <p>8-D 磁盘镜像/磁盘双工</p>
+    <p>8-E 并行交叉存取</p>
+  </div>
 
 <!-- EXCLUDE SUMMARY -->
 <section class="section exclude-section" id="exclude">
