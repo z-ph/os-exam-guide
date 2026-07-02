@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>操作系统 · 第4-5章 习题汇总</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8f9fb;
+      --bg-card: #ffffff;
+      --bg-code: #f1f3f6;
+      --bg-table-head: #f0f2f7;
+      --bg-table-alt: #fafbfd;
+      --text: #1a1d2e;
+      --text-secondary: #5a6078;
+      --text-muted: #8a90a8;
+      --border: #e2e5ee;
+      --accent: #2d5af5;
+      --accent-light: #e8eeff;
+      --accent2: #0ea5e9;
+      --accent3: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --success: #10b981;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+      --shadow-hover: 0 4px 6px rgba(0,0,0,0.05), 0 10px 24px rgba(0,0,0,0.06);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --font-body: 'Inter', 'Noto Serif SC', -apple-system, sans-serif;
+      --font-serif: 'Noto Serif SC', serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f111a;
+        --bg-card: #181b2a;
+        --bg-code: #1e2235;
+        --bg-table-head: #1e2235;
+        --bg-table-alt: #141724;
+        --text: #e4e6f0;
+        --text-secondary: #9ca3b8;
+        --text-muted: #6b728e;
+        --border: #2a2f45;
+        --accent: #4d7bff;
+        --accent-light: #1a2244;
+        --accent2: #38bdf8;
+        --accent3: #34d399;
+        --danger: #f87171;
+        --warning: #fbbf24;
+        --success: #34d399;
+        --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.2);
+        --shadow-hover: 0 4px 6px rgba(0,0,0,0.25), 0 10px 24px rgba(0,0,0,0.3);
+      }
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ========== HERO ========== */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 20% 50%, rgba(45,90,245,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 30%, rgba(14,165,233,0.06) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 56px 24px 40px;
+      position: relative;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-badge svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-desc {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 600px;
+    }
+
+    /* ========== NAV ========== */
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: color-mix(in srgb, var(--bg-card) 90%, transparent);
+      backdrop-filter: blur(16px) saturate(1.4);
+      -webkit-backdrop-filter: blur(16px) saturate(1.4);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav-inner::-webkit-scrollbar { display: none; }
+
+    .nav-item {
+      flex-shrink: 0;
+      padding: 14px 16px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .nav-item:hover {
+      color: var(--accent);
+    }
+
+    .nav-item.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* ========== MAIN ========== */
+    .main {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* ========== SECTION ========== */
+    .section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .section:hover {
+      box-shadow: var(--shadow-hover);
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: 1.45rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title .icon {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+
+    .ch4 .icon { background: var(--accent-light); color: var(--accent); }
+    .ch5 .icon { background: rgba(16,185,129,0.12); color: var(--accent3); }
+
+    h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin: 24px 0 12px;
+      color: var(--text);
+    }
+
+    h4 {
+      font-size: 0.98rem;
+      font-weight: 600;
+      margin: 18px 0 8px;
+      color: var(--text-secondary);
+    }
+
+    p {
+      margin-bottom: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* ========== EXERCISE CARD ========== */
+    .exercise {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      margin: 20px 0;
+      overflow: hidden;
+    }
+
+    .exercise-header {
+      background: var(--bg-table-head);
+      padding: 16px 20px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .exercise-header .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+
+    .exercise-body {
+      padding: 20px;
+    }
+
+    .exercise-body h5 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: 16px 0 8px;
+    }
+
+    .exercise-body h5:first-child { margin-top: 0; }
+
+    /* ========== TABLES ========== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin: 16px 0;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: var(--bg-table-head);
+      font-weight: 600;
+      color: var(--text);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    tr:nth-child(even) td { background: var(--bg-table-alt); }
+    tr:hover td { background: var(--accent-light); }
+
+    /* ========== CODE ========== */
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+      background: var(--bg-code);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    pre {
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      overflow-x: auto;
+      margin: 12px 0;
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+      color: var(--text);
+      font-size: 0.84rem;
+      line-height: 1.7;
+    }
+
+    /* ========== FORMULAS ========== */
+    .formula {
+      background: var(--bg-code);
+      border-left: 3px solid var(--accent);
+      padding: 14px 18px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: 14px 0;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+    }
+
+    /* ========== ANSWER ========== */
+    .answer {
+      background: rgba(16,185,129,0.06);
+      border: 1px solid rgba(16,185,129,0.2);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      margin-top: 16px;
+    }
+
+    .answer-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--success);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 8px;
+    }
+
+    /* ========== TIPS ========== */
+    .tip {
+      background: var(--accent-light);
+      border: 1px solid rgba(45,90,245,0.15);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 0.92rem;
+    }
+
+    .tip-title {
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ========== HIGHLIGHT ========== */
+    .hl { color: var(--accent); font-weight: 600; }
+    .hl-red { color: var(--danger); font-weight: 600; }
+    .hl-green { color: var(--success); font-weight: 600; }
+    .hl-orange { color: var(--warning); font-weight: 600; }
+
+    /* ========== FORMULA SHEET ========== */
+    .formula-sheet {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      box-shadow: var(--shadow);
+    }
+
+    .formula-sheet h2 {
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      margin-bottom: 20px;
+    }
+
+    /* ========== EXCLUDE ========== */
+    .exclude {
+      background: rgba(239,68,68,0.05);
+      border: 1px solid rgba(239,68,68,0.15);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      margin: 16px 0;
+    }
+
+    .exclude-title {
+      font-weight: 600;
+      color: var(--danger);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 640px) {
+      .section { padding: 20px; }
+      .hero-inner { padding: 36px 20px 28px; }
+      .main { padding: 24px 16px 60px; }
+      th, td { padding: 8px 10px; font-size: 0.82rem; }
+    }
+
+    /* ========== SCROLL REVEAL ========== */
+    .section {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: reveal 0.5s ease forwards;
+    }
+
+    .section:nth-child(1) { animation-delay: 0.05s; }
+    .section:nth-child(2) { animation-delay: 0.1s; }
+    .section:nth-child(3) { animation-delay: 0.15s; }
+    .section:nth-child(4) { animation-delay: 0.2s; }
+    .section:nth-child(5) { animation-delay: 0.25s; }
+
+    @keyframes reveal {
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== HERO ========== -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        操作系统期末复习
+      </div>
+      <h1>第 4-5 章 习题汇总</h1>
+      <p class="hero-desc">基于课件与考试复习资料整理，涵盖存储器管理与虚拟存储器核心计算题。</p>
+    </div>
+  </header>
+
+  <!-- ========== NAV ========== -->
+  <nav class="nav-bar">
+    <div class="nav-inner">
+      <a href="#ch4" class="nav-item active">第4章 存储器管理</a>
+      <a href="#ch4-ex" class="nav-item">Ch4 习题</a>
+      <a href="#ch5" class="nav-item">第5章 虚拟存储器</a>
+      <a href="#ch5-ex" class="nav-item">Ch5 习题</a>
+      <a href="#formula" class="nav-item">公式速查</a>
+    </div>
+  </nav>
+
+  <!-- ========== MAIN ========== -->
+  <main class="main">
+
+    <!-- ========== CH4 ========== -->
+    <section class="section ch4" id="ch4">
+      <h2 class="section-title"><span class="icon">Ch4</span> 存储器管理 · 核心概念</h2>
+
+      <h3>逻辑地址 → 物理地址变换</h3>
+      <p><strong>基本分页地址变换</strong>：</p>
+      <ul style="margin: 8px 0 12px 20px; color: var(--text-secondary);">
+        <li>逻辑地址 A，页面大小 L</li>
+        <li>页号 P = INT[A / L]</li>
+        <li>页内偏移 d = A MOD L</li>
+        <li>物理地址 = 页表[P] × L + d</li>
+      </ul>
+
+      <div class="tip">
+        <div class="tip-title">💡 位运算技巧</div>
+        当页面尺寸为 2 的幂时，可直接用位运算拆分页号和页内地址，无需除法。
+        <br>例：页大小 1KB = 2<sup>10</sup>，逻辑地址 4101 = 二进制 <code>000100 0000000101</code>
+        <br>→ 页号 = <span class="hl">4</span>，页内地址 = <span class="hl">5</span>
+      </div>
+
+      <h4>快表 TLB</h4>
+      <p>高速缓存，存放最近访问的页表项。若命中则无需访问内存中的页表，加快地址变换速度。</p>
+
+      <h4>两级页表</h4>
+      <p>将页表再分页，解决页表过长的问题。查找路径：外层页表 → 内层页表 → 物理块。</p>
+    </section>
+
+    <section class="section ch4" id="ch4-ex">
+      <h2 class="section-title"><span class="icon">Ch4</span> 存储器管理 · 课后习题</h2>
+
+      <!-- EX1 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="num">1</span> 地址格式与页表计算</div>
+        <div class="exercise-body">
+          <h5>题目</h5>
+          <p>某系统采用页式存储管理策略，拥有逻辑空间 <span class="hl">32 页</span>，每页 <span class="hl">2K</span>，拥有物理空间 <span class="hl">1M</span>。</p>
+          <p>(1) 写出逻辑地址的格式。<br>(2) 若不考虑访问权限等，进程的页表有多少项？每项至少有多少位？<br>(3) 如果物理空间减少一半，页表结构应相应作怎样的改变？</p>
+
+          <div class="answer">
+            <div class="answer-label">✅ 解答</div>
+            <p><strong>(1)</strong> 逻辑地址空间 32 页 → 页号需 <span class="hl">5 位</span>；每页 2K → 页内地址需 <span class="hl">11 位</span>。</p>
+            <p><strong>(2)</strong> 页表项数 = <span class="hl">32</span>。1M 物理空间可分为 2<sup>9</sup> 个内存块 → 每项至少 <span class="hl">9 位</span>。</p>
+            <p><strong>(3)</strong> 物理空间减半 → 页表项数<span class="hl">不变</span>，每项长度可<span class="hl">减少 1 位</span>。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- EX2 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="num">2</span> 逻辑地址转物理地址</div>
+        <div class="exercise-body">
+          <h5>题目</h5>
+          <p>已知某分页系统，主存容量 64K，页面大小 1K，4 页大的作业，其 0、1、2、3 页分别被分配到主存的 2、4、6、7 块中。将逻辑地址 <span class="hl">1023、2500、3500、4500</span> 转换成物理地址。</p>
+
+          <div class="answer">
+            <div class="answer-label">✅ 解答</div>
+            <table>
+              <tr><th>逻辑地址</th><th>页号</th><th>页内地址</th><th>物理块号</th><th>物理地址</th></tr>
+              <tr><td>1023</td><td>0</td><td>1023</td><td>2</td><td><span class="hl">3071</span></td></tr>
+              <tr><td>2500</td><td>2</td><td>452</td><td>6</td><td><span class="hl">6596</span></td></tr>
+              <tr><td>3500</td><td>3</td><td>428</td><td>7</td><td><span class="hl">7596</span></td></tr>
+              <tr><td>4500</td><td>4</td><td>404</td><td>—</td><td><span class="hl-red">越界中断</span></td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- EX3 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="num">3</span> TLB 与内存访问时间</div>
+        <div class="exercise-body">
+          <h5>题目</h5>
+          <p>页表存放在主存中，一次存取需 1.5μs。</p>
+          <p>(1) 实现一次页面访问的存取时间是多少？<br>(2) 加快表后平均命中率 85%，快表查找时间忽略为 0，此时存取时间是多少？</p>
+
+          <div class="answer">
+            <div class="answer-label">✅ 解答</div>
+            <p><strong>(1)</strong> 页表在主存 → 需两次访问主存（查页表 + 取数据）</p>
+            <div class="formula">1.5 × 2 = <span class="hl">3 μs</span></div>
+            <p><strong>(2)</strong> 快表命中时只需一次访问；未命中时仍需两次</p>
+            <div class="formula">0.85 × 1.5 + (1 − 0.85) × 2 × 1.5 = <span class="hl">1.725 μs</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EX4 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="num">4</span> 内存分配算法</div>
+        <div class="exercise-body">
+          <h5>题目</h5>
+          <p>空闲区大小：10K, 4K, 20K, 18K, 7K, 9K, 12K, 15K。请求：12K, 10K, 9K。分别用循环适应算法和最佳适应算法找出哪些空闲区。</p>
+
+          <div class="answer">
+            <div class="answer-label">✅ 解答</div>
+            <p>• 循环适应算法：<span class="hl">20K, 18K, 9K</span></p>
+            <p>• 最佳适应算法：<span class="hl">12K, 10K, 9K</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- EX5 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="num">5</span> 段式地址变换</div>
+        <div class="exercise-body">
+          <h5>题目</h5>
+          <p>将逻辑地址 (0,137)、(1,4000)、(2,3600)、(5,230) 转换成物理地址。</p>
+          <table>
+            <tr><th>段号</th><th>基址</th><th>段长</th></tr>
+            <tr><td>0</td><td>50K</td><td>10K</td></tr>
+            <tr><td>1</td><td>60K</td><td>3K</td></tr>
+            <tr><td>2</td><td>70K</td><td>5K</td></tr>
+            <tr><td>3</td><td>120K</td><td>8K</td></tr>
+          </table>
+
+          <div class="answer">
+            <div class="answer-label">✅ 解答</div>
+            <table>
+              <tr><th>逻辑地址</th><th>计算</th><th>结果</th></tr>
+              <tr><td>(0, 137)</td><td>137 &lt; 10K</td><td><span class="hl">51337</span></td></tr>
+              <tr><td>(1, 4000)</td><td>4000 &gt; 3K (3072)</td><td><span class="hl-red">越界中断</span></td></tr>
+              <tr><td>(2, 3600)</td><td>3600 &lt; 5K (5120)</td><td><span class="hl">75280</span></td></tr>
+              <tr><td>(5, 230)</td><td>段号超出段表</td><td><span class="hl-red">越界中断</span></td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== CH5 ========== -->
+    <section class="section ch5" id="ch5">
+      <h2 class="section-title"><span class="icon">Ch5</span> 虚拟存储器 · 核心概念</h2>
+
+      <h3>页面置换算法（考试范围：FIFO、OPT、LRU）</h3>
+      <table>
+        <tr><th>算法</th><th>策略</th><th>特点</th></tr>
+        <tr><td><strong>OPT</strong></td><td>淘汰以后永不使用或最长时间不再被访问的页</td><td>理论最优，无法实现</td></tr>
+        <tr><td><strong>FIFO</strong></td><td>淘汰最早进入内存的页</td><td>可能出现 <span class="hl-red">Belady 异常</span></td></tr>
+        <tr><td><strong>LRU</strong></td><td>淘汰最近一段时间最久未被访问的页</td><td>性能接近 OPT，实际常用</td></tr>
+      </table>
+
+      <div class="exclude">
+        <div class="exclude-title">🚫 排除不考</div>
+        Clock 置换算法（简单 Clock 和改进型 Clock）不在考试范围内。
+      </div>
+
+      <h3>缺页率计算</h3>
+      <div class="formula">
+        <span class="hl">缺页率</span> = 缺页次数 / 总访问次数
+      </div>
+
+      <h3>有效访问时间</h3>
+      <div class="formula">
+        有效访问时间 = (1 − p) × t + p × f
+        <br><span style="color: var(--text-muted);">p=缺页率, t=内存访问时间, f=缺页中断时间</span>
+      </div>
+
+      <h4>请求分页的基本概念</h4>
+      <p>• <strong>局部性原理</strong>：时间局部性（循环）+ 空间局部性（顺序）</p>
+      <p>• 虚拟存储器特征：<strong>离散性、多次性、对换性、虚拟性</strong></p>
+      <p>• 页表项结构：页号 | 物理块号 | 状态位 P | 访问字段 A | 修改位 M | 外存地址</p>
+    </section>
+
+    <section class="section ch5" id="ch5-ex">
+      <h2 class="section-title"><span class="icon">Ch5</span> 虚拟存储器 · 课后习题</h2>
+
+      <!-- EX1 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="num">1</span> 页面置换过程分析</div>
+        <div class="exercise-body">
+          <h5>题目</h5>
+          <p>分配 3 个物理块，页面引用串：</p>
+          <div class="formula">7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2, 1, 2, 0, 1, 7, 0, 1</div>
+          <p>分别用 OPT、FIFO、LRU 计算缺页次数和缺页率。</p>
+
+          <div class="answer">
+            <div class="answer-label">✅ 解答要点</div>
+            <table>
+              <tr><th>算法</th><th>缺页次数</th><th>缺页率</th></tr>
+              <tr><td>OPT</td><td><span class="hl">9</span></td><td>45%</td></tr>
+              <tr><td>FIFO</td><td><span class="hl">15</span></td><td>75%</td></tr>
+              <tr><td>LRU</td><td><span class="hl">12</span></td><td>60%</td></tr>
+            </table>
+            <p style="margin-top: 10px;">💡 FIFO 可能出现 <strong>Belady 异常</strong>：物理块增加，缺页率反而增加。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- EX2 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="num">2</span> 二维数组缺页分析</div>
+        <div class="exercise-body">
+          <h5>题目</h5>
+          <p>二维数组 <code>Var A: ARRAY[1..100, 1..100] OF integer;</code> 按行优先存储。</p>
+          <p>每页放 200 个整数，内存块数 3（1 块程序 + 2 块数据）。分别计算两个嵌套循环的缺页次数。</p>
+
+          <div class="answer">
+            <div class="answer-label">✅ 解答</div>
+            <p><strong>程序 1</strong>（按行访问）：首次装入第 1、2 行共 200 个整数，处理完 200 个才再次缺页。100×100 个整数共 <span class="hl-green">50 次缺页</span>。</p>
+            <p><strong>程序 2</strong>（按列访问）：每次只处理 2 个整数就需换页。100×100 个整数共 <span class="hl-red">5000 次缺页</span>。</p>
+            <div class="tip">
+              <div class="tip-title">💡 结论</div>
+              存储顺序与访问顺序一致时缺页率大大降低 —— 体现 <strong>空间局部性原理</strong>。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EX3 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="num">3</span> 缺页率与有效访问时间</div>
+        <div class="exercise-body">
+          <h5>题目</h5>
+          <p>页表保存在寄存器中。被替换页未修改 → 缺页中断 8ms；修改过 → 20ms。内存存取 1μs。70% 被替换页被修改过。保证有效存取时间 ≤ 2μs，求最大缺页率。</p>
+
+          <div class="answer">
+            <div class="answer-label">✅ 解答</div>
+            <div class="formula">
+              (1−p) × 1 + p × (0.7 × 20000 + 0.3 × 8000 + 1) ≤ 2<br>
+              1 + 16399.1p ≤ 2<br>
+              p ≤ 1 / 16399.1 ≈ <span class="hl">0.00006</span>
+            </div>
+            <p>即可接受的最大缺页率约为 <span class="hl">0.006%</span>。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- EX4 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="num">4</span> 虚拟地址转物理地址</div>
+        <div class="exercise-body">
+          <h5>题目</h5>
+          <p>用户空间 32 页，每页 1K，主存 16K。页 0、1、2、3 分配的物理块号为 5、10、4、7。作业长度 6 页。将虚拟地址 <span class="hl">0A5C、103C、1A5C</span>（十六进制）转换成物理地址。</p>
+
+          <div class="answer">
+            <div class="answer-label">✅ 解答</div>
+            <p>页大小 1K = 2<sup>10</sup> → 页内地址占 10 位。</p>
+            <table>
+              <tr><th>虚拟地址</th><th>页号</th><th>页内地址</th><th>物理块号</th><th>物理地址</th></tr>
+              <tr><td>0A5C</td><td>2</td><td>25C</td><td>4</td><td><span class="hl">125C</span></td></tr>
+              <tr><td>103C</td><td>4</td><td>03C</td><td>未分配</td><td><span class="hl-red">缺页中断</span></td></tr>
+              <tr><td>1A5C</td><td>6</td><td>25C</td><td>超作业长度</td><td><span class="hl-red">越界中断</span></td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- EX5 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="num">5</span> 段表访问分析</div>
+        <div class="exercise-body">
+          <h5>题目</h5>
+          <p>存在位为 1 表示段在内存。分析各指令执行结果。</p>
+          <table>
+            <tr><th>段号</th><th>存在位</th><th>内存始址</th><th>段长</th><th>存取控制</th></tr>
+            <tr><td>0</td><td>0</td><td>500</td><td>100</td><td>W</td></tr>
+            <tr><td>1</td><td>1</td><td>1000</td><td>30</td><td>R</td></tr>
+            <tr><td>2</td><td>1</td><td>3000</td><td>200</td><td>E</td></tr>
+            <tr><td>3</td><td>1</td><td>8000</td><td>80</td><td>R</td></tr>
+            <tr><td>4</td><td>0</td><td>5000</td><td>40</td><td>R</td></tr>
+          </table>
+          <p style="margin-top: 10px;">指令：<code>STORE R1,[0,70]</code>、<code>STORE R1,[1,20]</code>、<code>LOAD R1,[3,20]</code>、<code>LOAD R1,[3,100]</code>、<code>JMP [2,100]</code></p>
+
+          <div class="answer">
+            <div class="answer-label">✅ 解答</div>
+            <table>
+              <tr><th>指令</th><th>结果</th></tr>
+              <tr><td>STORE R1,[0,70]</td><td><span class="hl-red">缺段中断</span>（段 0 存在位为 0）</td></tr>
+              <tr><td>STORE R1,[1,20]</td><td><span class="hl-red">存取控制保护中断</span>（段 1 只读）</td></tr>
+              <tr><td>LOAD R1,[3,20]</td><td><span class="hl-green">正常执行</span></td></tr>
+              <tr><td>LOAD R1,[3,100]</td><td><span class="hl-red">越界中断</span>（100 &gt; 段长 80）</td></tr>
+              <tr><td>JMP [2,100]</td><td><span class="hl-green">正常执行</span>（100 &lt; 段长 200，且 E 允许执行）</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== FORMULA ========== -->
+    <section class="formula-sheet" id="formula">
+      <h2>📋 公式速查表</h2>
+      <table>
+        <tr><th>公式</th><th>说明</th></tr>
+        <tr><td><code>P = INT[A / L]</code></td><td>页号 = 逻辑地址 / 页大小（取整）</td></tr>
+        <tr><td><code>d = A MOD L</code></td><td>页内偏移</td></tr>
+        <tr><td>物理地址 = 物理块号 × 页大小 + 页内偏移</td><td>基本分页地址变换</td></tr>
+        <tr><td>缺页率 = 缺页次数 / 总访问次数</td><td>—</td></tr>
+        <tr><td>有效访问时间 = (1−p) × t + p × f</td><td>p=缺页率, t=内存访问时间, f=缺页中断时间</td></tr>
+      </table>
+    </section>
+
+  </main>
+
+  <script>
+    // Active nav on scroll
+    const sections = document.querySelectorAll('.section, .formula-sheet');
+    const navItems = document.querySelectorAll('.nav-item');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navItems.forEach(item => {
+            item.classList.toggle('active', item.getAttribute('href') === '#' + id);
+          });
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+
+    sections.forEach(s => observer.observe(s));
+  </script>
+</body>
+</html>
